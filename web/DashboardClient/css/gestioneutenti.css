@@ -1,0 +1,79 @@
+
+.fonti_sel{
+	
+	display:table-caption;
+	width:auto;
+	height:auto;
+	/*margin-top:10%;
+	*/padding:0.3%;
+	
+	
+	transform:rotate(-70deg);
+	-ms-transform:rotate(-70deg); /* IE 9 */
+	-moz-transform:rotate(-70deg); /* Firefox */
+	-webkit-transform:rotate(-70deg); /* Safari and Chrome*/ 
+	-o-transform:rotate(-70deg); /* Opera */
+	
+}
+/*
+#tab{
+	width:auto;
+	height:auto;
+}
+
+
+
+#ul{
+	padding: 1%;
+	margin-left:-14%;
+}
+*/
+.input{
+	position:relative;
+	padding:3%; 
+	left:10%;
+	
+}
+
+#save{
+	position:relative;
+	left:85.3%;
+}
+
+.elem_fonte{
+position:relative;
+left:15%;}
+
+.div_fonte{
+border-bottom:solid;
+border-width:1px;
+border-color:#DDDDDD
+}
+
+
+.expand{
+	display:none;
+	position:absolute;
+	left:45%;
+}
+
+.pagina{
+position:relative;
+left:5%;
+
+}
+
+.div_pagina{
+position:relative;
+left:5%;
+
+border-bottom:solid;
+border-width:1px;
+border-color:#DDDDDD;
+
+}
+
+.pagine_nascoste{
+display:none;
+
+}
