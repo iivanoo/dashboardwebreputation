@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- start: Meta -->
+<meta charset="utf-8">
+<title>Optimus Dashboard</title>
+<meta name="description"
+	content="Optimus Dashboard Bootstrap Admin Template.">
+<meta name="author" content="‚Äö√Ñ√∂‚àö√ë‚àö‚àÇ‚Äö√†√∂‚àö√´‚Äö√†√∂‚Äö√†√á‚Äö√Ñ√∂‚àö‚Ä†‚àö‚àÇ¬¨¬®¬¨¬¢‚Äö√Ñ√∂‚àö‚Ä†‚àö‚àÇ‚Äö√Ñ√∂‚àö√ë‚Äö√Ñ‚Ä†‚Äö√Ñ√∂‚àö√ë‚àö‚àÇ‚Äö√†√∂‚Äö√Ñ‚Ä†‚Äö√†√∂‚Äö√†√á‚Äö√Ñ√∂‚àö‚Ä†‚àö‚àÇ‚Äö√†√∂¬¨¬±ukasz Holeczek">
+<!-- end: Meta -->
+
+<!-- start: Mobile Specific -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- end: Mobile Specific -->
+
+<!-- start: CSS -->
+<link id="bootstrap-style" href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+<link id="base-style" href="css/style.css" rel="stylesheet">
+<link id="base-style-responsive" href="css/style-responsive.css"
+	rel="stylesheet">
+<link id="bootstrap-style" href="css/customboxes.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/2.0.2/optional/css/common.css" />
+<link rel="stylesheet" href="assets/2.0.2/optional/css/layout.css" />
+
+
+<!-- end: CSS -->
+ <script src="assets/2.0.2/required/js/carrotsearch.foamtree.html5.min.js"></script>
+<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+<!-- start: Favicon -->
+<link rel="shortcut icon" href="img/favicon.ico">
+<!-- end: Favicon -->
+
+</head>
+
+<body onload='dettaglio()'>
+	<!-- start: Header -->
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> </a> <a class="brand" href="index.html"> <img
+					alt="Optimus Dashboard" src="img/logo20.png" /> <span>Dipartimento
+						Protezione Civile</span>
+				</a>
+
+				<!-- start: Header Menu -->
+				<div class="btn-group pull-right">
+
+					<!-- start: User Dropdown -->
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="icon-user"></i><span class="hidden-phone hidden-tablet">
+							admin</span> <span class="caret"></span> </a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Profile</a>
+						</li>
+						<li><a href="gestione_utenti.html">Gestione Utenti</a>
+						</li>
+						<li class="divider"></li>
+						<li><a href="login.html">Logout</a>
+						</li>
+					</ul>
+					<!-- end: User Dropdown -->
+				</div>
+				<!-- end: Header Menu -->
+
+			</div>
+		</div>
+	</div>
+	<div id="under-header"></div>
+	<!-- start: Header -->
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+			<!-- start: Main Menu -->
+			<div class="span2 main-menu-span">
+				<div class="nav-collapse sidebar-nav">
+					<ul id="nav_sorgenti" class="nav nav-tabs nav-stacked main-menu">
+						<li class="nav-header hidden-tablet">Sorgenti Dati</li>
+						<li onclick='eraseCookie("fontecliccata");'><a href="index.html"><i class="icon-list-alt"></i><span
+								class="hidden-tablet"> Dashboard</span>
+						</a>
+						</li>
+                                                <ul id="ulbo" class="nav nav-tabs nav-stacked main-menu">
+						<script id="el_fonti" type="text/x-handlebars-template">
+                                                    {{#each fontifill}}
+                                                    <li class="navigation" id="{{this}}" onclick='eraseCookie("fontecliccata");createCookie("fontecliccata","{{this}}",1);'><a href="dettaglio.html"><i class="icon-list-alt"></i><span class="hidden-tablet">{{this}}</span></a></li>
+                                                    {{/each}}
+                                                </script> 
+                                                </ul>
+					</ul>
+				</div>
+				<!--/.well -->
+			</div>
+			<!--/span-->
+			<!-- end: Main Menu -->
+
+			<noscript>
+				<div class="alert alert-block span10">
+					<h4 class="alert-heading">Warning!</h4>
+					<p>
+						You need to have <a href="http://en.wikipedia.org/wiki/JavaScript"
+							target="_blank">JavaScript</a> enabled to use this site.
+					</p>
+				</div>
+			</noscript>
+
+			<div id="content" class="span10">
+				<!-- start: Content -->
+
+				<div>
+					<ul class="breadcrumb">
+						<li><a href="#">Home</a> <span class="divider">/</span></li>
+						<li><a href="#">Dashboard</a></li>
+					</ul>
+				</div>
+
+				<div class="btn-group pull-right">
+
+					<form class="form-search">
+						¬¨¬®¬¨¬Æ¬¨¬®¬¨√Ü¬¨¬®¬¨¬Æ¬¨¬®‚àö√ú‚Äö√Ñ√∂‚àö√ë‚àö‚àÇ‚Äö√†√∂‚àö√´‚Äö√†√∂‚Äö√†√á‚Äö√Ñ√∂‚àö‚Ä†‚àö‚àÇ‚Äö√†√∂‚àö¬¥‚Äö√Ñ√∂‚àö√ë‚àö‚àÇ‚Äö√†√∂‚àö√´‚Äö√Ñ√∂‚àö√ë‚Äö√Ñ‚Ä†
+						<!--input type="text" class="input-medium search-query"-->
+
+						<input type="text" class="span4 typeahead" id="typeahead"
+							data-provide="typeahead" data-items="4"
+							
+							value="Cerca..."> 
+							
+							
+						<button type="submit" class="btn">Search</button>
+
+
+					</form>
+
+				</div>
+
+				<hr>
+				<hr style="margin-top: 28px">
+
+				<div class="row-fluid" style="height: 400px;">
+
+					<div class="box span8" style="width: 30%; height: 300px;">
+						<div class="box-header">
+							<h2>
+								<i class="icon-signal"></i><span class="break"></span>Topic
+								Statistics
+							</h2>
+							<!--<div class="box-icon">
+								<a href="#" class="btn-setting"><i class="icon-wrench"></i>
+								</a> <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
+								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
+								</a>
+							</div>-->
+						</div>
+						<div class="box-content" style="height: 300px;">
+							<div id="sincos" class="center" style="height: 300px;"></div>
+						</div>
+					</div>
+
+					<div id="carrot" class="box span4" style="height: 300px;">
+						<div class="box-header">
+							<h2>
+								<i class="icon-list-alt"></i><span class="break"></span>Topic
+							</h2>
+							<!--<div class="box-icon">
+								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
+								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
+								</a>
+							</div>-->
+						</div>
+						<div class="box-content" style="height: 300px;">
+                                                    <!--carrot-->
+                                                 <div id="overlay2"></div><div id="loading2" >Loading...</div>
+                                                <div id="visualization2" ></div>
+                                                
+                                                
+                                                
+                                                </div></div>
+					<!--/span-->
+
+					<div id="elenco_link" class="box span4">
+						<div class="box-header">
+							<h2>
+								<i class="icon-list-alt"></i><span class="break"></span>Links
+							</h2>
+							<!--<div class="box-icon">
+								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
+								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
+								</a>
+							</div>-->
+						</div>
+						<div id="elenco_link_carrot" class="box-content" style="height: 300px;">
+                                                    <!--inserimento contenuto-->
+                                                        
+                                                </div>
+					</div>
+					<!--/span-->
+
+
+				</div>
+
+				<hr>
+
+				<div class="row-fluid">
+
+					<div class="box span8" style="width: 40%;">
+						<div class="box-header">
+							<h2>
+								<i class="icon-signal"></i><span class="break"></span>Reputation
+								Statistics
+							</h2>
+							<!--<div class="box-icon">
+								<a href="#" class="btn-setting"><i class="icon-wrench"></i>
+								</a> <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
+								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
+								</a>
+							</div>-->
+						</div>
+						<div class="box-content">
+
+							<div id="flotchart" class="center" style="height: 364px"></div>
+
+
+						</div>
+					</div>
+
+					<div id="span_carrot_plus" class="span4" style="width: 35%;">
+						<div class="box-header">
+							<h2>
+								<i class="icon-list-alt"></i><span class="break"></span>Topic
+								positivi
+							</h2>
+							<!--<div class="box-icon">
+								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
+								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
+								</a>
+							</div>-->
+						</div>
+						<div id="carrot_plus" class="box-content" style="height: 150px;"> <!--carrot positivi-->
+
+						<div id="overlay"></div><div id="loading" >Loading...</div>
+                                                <div id="visualization" ></div>
+                                                
+                                                
+                                                
+                                                </div></div>
+					<!--/span-->
+
+					<div id="span_link_plus" class="span4" style="width: 19%;">
+						<div class="box-header">
+							<h2>
+								<i class="icon-list-alt"></i><span class="break"></span>Link
+								positivi
+							</h2>
+							<!--<div class="box-icon">
+								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
+								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
+								</a>
+							</div>-->
+						</div>
+						<div id="elenco_link_plus" class="box-content"
+							style="height: 150px;"></div>
+					</div>
+					<!--/span-->
+
+
+
+					<div id="box_carrot_minus" class="span4" style="width: 35%;">
+						<div class="box-header">
+							<h2>
+								<i class="icon-list-alt"></i><span class="break"></span>Topic
+								negativi
+							</h2>
+							<!--<div class="box-icon">
+								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
+								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
+								</a>
+							</div>-->
+						</div>
+						<div id="carrot_minus" class="box-content" style="height: 150px;"> <!--carrot negativi-->
+
+						 <div id="overlay3"></div><div id="loading3" >Loading...</div>
+                                                <div id="visualization3" ></div>
+                                                
+                                                
+                                                
+                                                </div></div> 
+    
+                              	<!--/span-->
+
+					<div id="box_link_minus" class="span4" style="width: 19%;">
+						<div class="box-header">
+							<h2>
+								<i class="icon-list-alt"></i><span class="break"></span>Link
+								negativi
+							</h2>
+							<!--<div class="box-icon">
+								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
+								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
+								</a>
+							</div>-->
+						</div>
+						<div id="elenco_link_minus" class="box-content"
+							style="height: 150px;"></div>
+					</div>
+					<!--/span-->
+
+
+				</div>
+
+				<div class="modal hide fade" id="myModal">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">‚Äö√Ñ√∂‚àö√ë‚àö‚àÇ‚Äö√†√∂‚àö√´‚Äö√†√∂‚Äö√†√á‚Äö√Ñ√∂‚àö‚Ä†‚àö‚àÇ‚Äö√Ñ√∂‚àö√ë‚Äö√Ñ‚Ä†‚Äö√Ñ√∂‚àö‚Ä†‚àö‚àÇ‚Äö√Ñ√∂‚àö‚Ä†‚àö√°‚Äö√Ñ√∂‚àö√ë‚àö‚àÇ‚Äö√†√∂‚Äö√Ñ‚Ä†‚Äö√†√∂‚Äö√†√á‚Äö√Ñ√∂‚àö√ë‚àö‚àÇ‚Äö√†√∂¬¨¬¢‚Äö√Ñ√∂‚àö√ë¬¨¬¢</button>
+						<h3>Settings</h3>
+					</div>
+					<div class="modal-body">
+						<p>Here settings can be configured...</p>
+					</div>
+					<div class="modal-footer">
+						<a href="#" class="btn" data-dismiss="modal">Close</a> <a href="#"
+							class="btn btn-primary">Save changes</a>
+					</div>
+				</div>
+
+				<div class="clearfix"></div>
+				<hr>
+
+		
+
+			</div>
+			<!--/.fluid-container-->
+                        
+			<!-- start: JavaScript-->
+                        
+			<script src="js/jquery-1.7.2.min.js"></script>
+			<script src="js/jquery-ui-1.8.21.custom.min.js"></script>
+                        <script src="js/handlebars.js"></script>
+			<script src="js/bootstrap.js"></script>
+
+			<script src="js/jquery.cookie.js"></script>
+
+			<script src='js/fullcalendar.min.js'></script>
+
+			<script src='js/jquery.dataTables.min.js'></script>
+
+			<script src="js/excanvas.js"></script>
+			<script src="js/jquery.flot.min.js"></script>
+			<script src="js/jquery.flot.pie.min.js"></script>
+			<script src="js/jquery.flot.stack.js"></script>
+			<script src="js/jquery.flot.resize.min.js"></script>
+
+			<script src="js/jquery.chosen.min.js"></script>
+
+			<script src="js/jquery.uniform.min.js"></script>
+
+			<script src="js/jquery.cleditor.min.js"></script>
+
+			<script src="js/jquery.noty.js"></script>
+
+			<script src="js/jquery.elfinder.min.js"></script>
+
+			<script src="js/jquery.raty.min.js"></script>
+
+			<script src="js/jquery.iphone.toggle.js"></script>
+
+			<script src="js/jquery.uploadify-3.1.min.js"></script>
+
+			<script src="js/jquery.gritter.min.js"></script>
+
+			<script src="js/jquery.imagesloaded.js"></script>
+
+			<script src="js/jquery.masonry.min.js"></script>
+
+			<script src="js/custom.js"></script>
+			
+                          <script src="js/sorgenti.js"></script>
+                         
+
+                            <!-- carrot scripts-->
+                          <!-- Example data, wrapped in the modelDataAvailable() function call -->
+                          <!--<script src="data/data-mining-100-topic-hierarchical.jsonp"></script>
+
+                            <!-- Demo helper, ignore. -->
+                            <script src="assets/2.0.2/optional/js/carrotsearch.foamtree.html5.helper.min.js"></script>
+                            <script src="assets/2.0.2/optional/js/carrotsearch.foamtree.html5.about.js"></script>
+                           
+</body>
+</html>
