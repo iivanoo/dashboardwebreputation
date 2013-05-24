@@ -42,7 +42,7 @@ public class AccessobyUtente {
 		List<String> accesso = new ArrayList<String>();
 		Connection conn = DbManager.getConnection();
 		Statement stmt = conn.createStatement();
-		ResultSet rset = stmt.executeQuery("SELECT DISTINCT s.Email AS label from Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s  WHERE u.ID=acc.IDUtente AND acc.IDSorgente=s.ID AND IDUtente = "+id+";");
+		ResultSet rset = stmt.executeQuery("SELECT DISTINCT s.Nome AS label from Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s  WHERE u.ID=acc.IDUtente AND acc.IDSorgente=s.ID AND IDUtente = "+id+";");
 		while (rset.next()) {
 			String st = rset.getObject("label").toString();
 			accesso.add(st);
