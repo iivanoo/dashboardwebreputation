@@ -11,7 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.PathParam;
 
-@Path("/links/topic/negative/idutente={IDUtente}/idfonte={IDFonte}/topic={topic}/limit={inf}-{sup}")
+@Path("/links/topic/negative/
+Percorso
+/links/topic/all/topic={topic}/idutente={IDUtente}/nomefonte={NomeFonte}/limit={inf}-{sup}
+Parametri
+{topic} :String
+{IDUtente} :int
+{NomeFonte} :String
+{inf} :int
+{sup} :int
+Metodi
+GET
+Media_Type
+TEXT_PLAIN
+GET
+Esempio di risultato:
+[{“nome”: “nomepagina1” , “links”[{“link”: “link1-1” , “testo”:”questo post appartiene al ...”},{“link”: “link1-2” , “testo”: “questoaltro post apparti...”}]},{“nome”: “nomepagina1” , “links”[{“link”: “link1-1” , “testo”:”questo post appartiene al ...”},{“link”: “link1-2” , “testo: questo altro post apparti..”}]}]
+
+														
+idutente={IDUtente}/idfonte={IDFonte}/topic={topic}/limit={inf}-{sup}")
 public class LinksForTopicNegative {
 
 	@GET
