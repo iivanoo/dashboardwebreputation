@@ -49,7 +49,7 @@ public class SorgentiResource {
 			throw new WebApplicationException(404);
 		}
 	}
-
+/*
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	// TODO this method must be tested
@@ -101,7 +101,7 @@ public class SorgentiResource {
 		}
 		return result;
 	}
-
+*/
 	private Sorgenti getSorgente(String id) throws Exception {
 		Sorgenti sorgente = null;
 		Connection conn = DbManager.getConnection();
