@@ -19,7 +19,7 @@ import db.DbManager;
 
 import java.sql.*;
 
-@Path("/Topics/search/Topic={topic}")
+@Path("/Topics/search/topic={topic}")
 public class TopicByTopic {
 
 	@GET
