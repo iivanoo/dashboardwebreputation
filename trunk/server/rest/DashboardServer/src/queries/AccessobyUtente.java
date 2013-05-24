@@ -28,12 +28,13 @@ public class AccessobyUtente {
 					result += "\",\"";
 				}
 			}
-			result += "\"]";
+			
 		}
 		catch (Exception exc) {
 			
 			System.out.println("Error: "+ exc.getMessage());
 		}
+		result += "\"]";
 		return result;
 	}
 
