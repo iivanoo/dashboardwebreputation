@@ -33,6 +33,7 @@ public class TopicByPost {
 			result = "[{\"error\":{\"text\":" + exc.getMessage() + "}}";
 			exc.printStackTrace();
 		}
+		result+="]";
 		return result;
 	}
 
