@@ -25,12 +25,12 @@ public class TopicByPost {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String searchContenutoByIdJSON(@PathParam("IDPost") int idp) {
-		String result = "";
+		String result = "[";
 		try {
-			result = this.getContenuto(idp).toJson();
+			result += this.getContenuto(idp).toJson();
 		}
 		catch (Exception exc) {
-			result = "{\"error\":{\"text\":" + exc.getMessage() + "}}";
+			result = "[{\"error\":{\"text\":" + exc.getMessage() + "}}";
 			exc.printStackTrace();
 		}
 		return result;
