@@ -23,11 +23,11 @@ import java.sql.*;
 public class PostByTopic {
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String searchContenutoByIdJSON(@PathParam("IDTopic") int idt) {
 		String result = "[";
 		try {
-			result = this.getContenuto(idt).toJson();
+			result += this.getContenuto(idt).toJson();
 		}
 		catch (Exception exc) {
 			result = "{\"error\":{\"text\":" + exc.getMessage() + "}}";
