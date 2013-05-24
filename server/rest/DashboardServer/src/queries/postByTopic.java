@@ -30,7 +30,7 @@ public class PostByTopic {
 			result += this.getContenuto(idt).toJson();
 		}
 		catch (Exception exc) {
-			result = "{\"error\":{\"text\":" + exc.getMessage() + "}}";
+			result = "[{\"error\":{\"text\":" + exc.getMessage() + "}}";
 			exc.printStackTrace();
 		}
 		result+="]";
