@@ -25,7 +25,7 @@ public class PostByTopic {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String searchContenutoByIdJSON(@PathParam("IDTopic") int idt) {
-		String result = "";
+		String result = "[";
 		try {
 			result = this.getContenuto(idt).toJson();
 		}
@@ -33,6 +33,7 @@ public class PostByTopic {
 			result = "{\"error\":{\"text\":" + exc.getMessage() + "}}";
 			exc.printStackTrace();
 		}
+		result+="]";
 		return result;
 	}
 
