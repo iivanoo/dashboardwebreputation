@@ -104,14 +104,17 @@ function fill_tabella(){
 
 	function salva_modifiche(){
 		var item = document.getElementsByTagName("input");
-		for(var i=1; i<item.length; i++){  //parte da 1 xke item[0] coincide con l'input id=typehead
+		for(var i=0; i<item.length; i++){
 			var email = item[i].id.split("$")[0];
 			
 			if(item[i].checked==true){
 			var fonte = item[i].id.split("$")[1];
+			
 			if(fonte == "admin"){
-				console.log(email);
-				$.get("http://localhost:8080/DashboardServer/api/admin/action=add/email="+email);
+				
+				var url="http://localhost:8080/DashboardServer/api/admin/action=add/email="+email;
+				$.get(url);
+				
 			}else{var pagina;
 			
 			if(item[i].id.split("$")[2] == ""){pagina="null";}
@@ -125,8 +128,8 @@ function fill_tabella(){
 			var email = item[i].id.split("$")[0];
 			var fonte = item[i].id.split("$")[1];
 			if(fonte == "admin"){
-				$.get("http://localhost:8080/DashboardServer/api/admin/action=del/email="+email);
-
+				var url="http://localhost:8080/DashboardServer/api/admin/action=del/email="+email;
+				$.get(url);
 			}else{var pagina;
 			
 			if(item[i].id.split("$")[2] == ""){pagina="null";}
