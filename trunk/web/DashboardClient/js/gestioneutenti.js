@@ -3,7 +3,6 @@ var ex;
 $(document).ready(function(){
     fill();
     fill_tabella();
-   
 });    // end ready function 
        
 
@@ -104,7 +103,7 @@ function fill_tabella(){
 
 	function salva_modifiche(){
 		var item = document.getElementsByTagName("input");
-		for(var i=0; i<item.length; i++){
+		for(var i=0; i<item.length; i++){  //parte da 1 xke item[0] coincide con l'input id=typehead
 			var email = item[i].id.split("$")[0];
 			
 			if(item[i].checked==true){
@@ -114,11 +113,11 @@ function fill_tabella(){
 				
 				var url="http://localhost:8080/DashboardServer/api/admin/action=add/email="+email;
 				$.get(url);
-				
+				console.log();
 			}else{var pagina;
-			
-			if(item[i].id.split("$")[2] == ""){pagina="null";}
-			else if(item[i].id.split("$")[2] == "Pagina pubblica"){pagina="public";}
+
+			if(item[i].id.split("$")[2] == "Pagina pubblica"){pagina="public";}
+			else if(item[i].id.split("$")[2] == ""){pagina="null";}
 			else{ pagina = item[i].id.split("$")[2];};
 			
 			$.get("http://localhost:8080/DashboardServer/api/Accesso/mod/add/utente="+email+"/nomefonte="+fonte+"/pagina="+pagina);
@@ -130,10 +129,11 @@ function fill_tabella(){
 			if(fonte == "admin"){
 				var url="http://localhost:8080/DashboardServer/api/admin/action=del/email="+email;
 				$.get(url);
+				console.log(url);
+				
 			}else{var pagina;
-			
-			if(item[i].id.split("$")[2] == ""){pagina="null";}
-			else if(item[i].id.split("$")[2] == "Pagina pubblica"){pagina="public";}
+			if(item[i].id.split("$")[2] == "Pagina pubblica"){pagina="public";}
+			else if(item[i].id.split("$")[2] == ""){pagina="null";}
 			else{ pagina = item[i].id.split("$")[2];};
 			$.get("http://localhost:8080/DashboardServer/api/Accesso/mod/del/utente="+email+"/nomefonte="+fonte+"/pagina="+pagina);
 			};
@@ -141,7 +141,8 @@ function fill_tabella(){
 			};
 		
 		}//end for
-	window.location = "index.html";	
+		console.log("cambiamenti salvati");
+		window.location = "index.html";	
 	}	
 
     
