@@ -3,9 +3,14 @@
  */
 var temp = new Array();
 
- 
+var ut = readCookie("idutente");
+
 $(document).ready(function(){
-	fill();
+	
+	
+	if(ut==null){window.location = "login.html";}
+	else{fill();
+	console.log(document.cookie);};
 	}); //end ready index
 
 function dettaglio(){//foamtrees
@@ -19,8 +24,9 @@ function dettaglio(){//foamtrees
       
 
 function fill(){
+
 	//var nomi= new Array();
-	$.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente=1", function(data) {
+	$.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente="+ut, function(data) {
 		
 		
 		for(var i=0; i<data.length; i++){
@@ -89,7 +95,7 @@ var plot;
 		
 		
 		
-                //creazione array di fonti  --->sarà un array di array(data,numeropost)
+                //creazione array di fonti  --->sar√† un array di array(data,numeropost)
                 var fonti=new Array(); 
                 
                 
@@ -133,7 +139,7 @@ var plot;
 					 xaxis: { mode: "time",
 							ticks: [data_post[0],data_post[1],data_post[2],data_post[3],data_post[4],data_post[5]]
 					 		},
-				   yaxis: { min: 0, max: max },  //il primo � l'etichetta del paramentro, il secondo max � il numero max di post esistenti
+				   yaxis: { min: 0, max: max },  //il primo è l'etichetta del paramentro, il secondo max è il numero max di post esistenti
 				   colors: ["blue","red"]
 				 });
 
@@ -173,7 +179,7 @@ var plot;
                 
 
     //settaggio dati per i bobble
-    function Sorgente(nomeS, post0, post1, post2, post3, post4, post5,pol0,pol1,pol2,pol3,pol4,pol5){ //post0 = numero post 6 sett fa. post5 numeo post odierni, analogamente le polarità
+    function Sorgente(nomeS, post0, post1, post2, post3, post4, post5,pol0,pol1,pol2,pol3,pol4,pol5){ //post0 = numero post 6 sett fa. post5 numeo post odierni, analogamente le polarit√†
              this.numeroPost=new Array();
             this.numeroPost[0]=post0;
             this.numeroPost[1]=post1;
@@ -550,8 +556,8 @@ function Links(div, Sorg,lnk,lb){
 
 
 function f2(inf,sup){var foamtree2, supported2;
-$.get("http://localhost:8080/DashboardServer/api/links/general/all/idutente="+readCookie("idutente")+"/nomefonte="+readCookie("fontecliccata")+"/limit="+inf+"-"+sup,function(titoli){
-var url = "http://localhost:8080/DashboardServer/api/links/general/all/idutente="+readCookie("idutente")+"/nomefonte="+readCookie("fontecliccata")+"/limit=";
+$.get("http://localhost:8080/DashboardServer/api/links/general/all/idutente="+ut+"/nomefonte="+readCookie("fontecliccata")+"/limit="+inf+"-"+sup,function(titoli){
+var url = "http://localhost:8080/DashboardServer/api/links/general/all/idutente="+ut+"/nomefonte="+readCookie("fontecliccata")+"/limit=";
       // Check if the browser supports FoamTree
       supported2 = CarrotSearchFoamTree.supported;
 
@@ -602,8 +608,8 @@ var url = "http://localhost:8080/DashboardServer/api/links/general/all/idutente=
 
 
 function f3(inf,sup){var foamtree3, supported3;
-$.get("http://localhost:8080/DashboardServer/api/links/general/negative/idutente="+readCookie("idutente")+"/nomefonte="+readCookie("fontecliccata")+"/limit="+inf+"-"+sup,function(titoli){
-var url = "http://localhost:8080/DashboardServer/api/links/general/negative/idutente="+readCookie("idutente")+"/nomefonte="+readCookie("fontecliccata")+"/limit=";
+$.get("http://localhost:8080/DashboardServer/api/links/general/negative/idutente="+ut+"/nomefonte="+readCookie("fontecliccata")+"/limit="+inf+"-"+sup,function(titoli){
+var url = "http://localhost:8080/DashboardServer/api/links/general/negative/idutente="+ut+"/nomefonte="+readCookie("fontecliccata")+"/limit=";
       // Check if the browser supports FoamTree
       supported3 = CarrotSearchFoamTree.supported;
 
@@ -648,8 +654,8 @@ var url = "http://localhost:8080/DashboardServer/api/links/general/negative/idut
 
 
 function f4(inf,sup){var foamtree, supported;
-$.get("http://localhost:8080/DashboardServer/api/links/general/positive/idutente="+readCookie("idutente")+"/nomefonte="+readCookie("fontecliccata")+"/limit="+inf+"-"+sup,function(titoli){
-var url = "http://localhost:8080/DashboardServer/api/links/general/positive/idutente="+readCookie("idutente")+"/nomefonte="+readCookie("fontecliccata")+"/limit=";
+$.get("http://localhost:8080/DashboardServer/api/links/general/positive/idutente="+ut+"/nomefonte="+readCookie("fontecliccata")+"/limit="+inf+"-"+sup,function(titoli){
+var url = "http://localhost:8080/DashboardServer/api/links/general/positive/idutente="+ut+"/nomefonte="+readCookie("fontecliccata")+"/limit=";
       // Check if the browser supports FoamTree
       supported = CarrotSearchFoamTree.supported;
 
@@ -709,16 +715,13 @@ function multifill(){
 	 //USARE dat_strings[] per le date nel formato 'AAAA-MM-GG'
 	var count=0;
 	var s = new Array();
-	//TODO dopo l'implementazione del login rimuovere le 2 seguenti righe.
-	eraseCookie("idutente");
-	createCookie("idutente","1");
 	
 	
-	$.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente="+readCookie("idutente"),function(nomi){
-	//TODO sostituire 'utente=1' con l'id utente ke si ricava dal cookie impostato durante il login
+	
+	$.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente="+ut,function(nomi){
 	 for(var x=0; x<nomi.length; x++){
 		
-		 $.get("http://localhost:8080/DashboardServer/api/Sorgenti/grafico/general/nomefonte="+nomi[x]+"/data1="+dat_strings[0]+"/data2="+dat_strings[1]+"/data3="+dat_strings[2]+"/data4="+dat_strings[3]+"/data5="+dat_strings[4]+"/data6="+dat_strings[5]+"/data7="+dat_strings[6],function(data){
+		 $.get("http://localhost:8080/DashboardServer/api/Sorgenti/grafico/general/utente="+ut+"/nomefonte="+nomi[x]+"/data1="+dat_strings[0]+"/data2="+dat_strings[1]+"/data3="+dat_strings[2]+"/data4="+dat_strings[3]+"/data5="+dat_strings[4]+"/data6="+dat_strings[5]+"/data7="+dat_strings[6],function(data){
 			 var par = $.parseJSON(data);
 			 s.push(new Sorgente(par.nomefonte, par.settimana1.numeropost,par.settimana2.numeropost,par.settimana3.numeropost,par.settimana4.numeropost,par.settimana5.numeropost,par.settimana6.numeropost, par.settimana1.gradimento, par.settimana2.gradimento,par.settimana3.gradimento, par.settimana4.gradimento, par.settimana5.gradimento, par.settimana6.gradimento));
 			
@@ -774,11 +777,11 @@ function dettaglio_fill(){
 	 //USARE dat_strings[] per le date nel formato 'AAAA-MM-GG'
 	var count=0;
 	var s1 = new Array();
-	 $.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente=1",function(nomi){
+	 $.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente="+readCookie("idutente"),function(nomi){
 	
 	
 		
-		 $.get("http://localhost:8080/DashboardServer/api/Sorgenti/grafico/general/nomefonte="+readCookie("fontecliccata")+"/data1="+dat_strings[0]+"/data2="+dat_strings[1]+"/data3="+dat_strings[2]+"/data4="+dat_strings[3]+"/data5="+dat_strings[4]+"/data6="+dat_strings[5]+"/data7="+dat_strings[6],function(data){
+		 $.get("http://localhost:8080/DashboardServer/api/Sorgenti/grafico/general/utente="+ut+"/nomefonte="+readCookie("fontecliccata")+"/data1="+dat_strings[0]+"/data2="+dat_strings[1]+"/data3="+dat_strings[2]+"/data4="+dat_strings[3]+"/data5="+dat_strings[4]+"/data6="+dat_strings[5]+"/data7="+dat_strings[6],function(data){
 			 var par = $.parseJSON(data);
 			 s1.push(new Sorgente(par.nomefonte, par.settimana1.numeropost,par.settimana2.numeropost,par.settimana3.numeropost,par.settimana4.numeropost,par.settimana5.numeropost,par.settimana6.numeropost, par.settimana1.gradimento, par.settimana2.gradimento,par.settimana3.gradimento, par.settimana4.gradimento, par.settimana5.gradimento, par.settimana6.gradimento));
 			
@@ -819,28 +822,3 @@ function switch_data(month){
 
 
 
-
-function createCookie(name,value,exp) {
-    if (exp) {
-        var date = new Date();
-        date.setTime(date.getTime()+(exp*24*60*60*1000));
-        var expires = "; expires="+date.toGMTString();
-    }
-    else var expires = "";
-    document.cookie = name+"="+value+expires+"; path=/";
-}
-
-function readCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
-
-function eraseCookie(name) {
-    createCookie(name,"",-1);
-}
