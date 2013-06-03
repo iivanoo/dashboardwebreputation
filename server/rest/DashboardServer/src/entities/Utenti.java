@@ -23,9 +23,10 @@ public class Utenti{
 	private int Creato_da;
 	private String Data_ins;
 	private boolean Admin;
+	private Boolean Attivo;
 	
 	public Utenti(int id, String nome, String cognome, String email, String password, String data, 
-			String citta, int creatore, String datains, boolean ad){
+			String citta, int creatore, String datains, boolean ad, boolean at){
 		this.ID = id;
 		this.Nome = nome;
 		this.Cognome = cognome;
@@ -36,6 +37,7 @@ public class Utenti{
 		this.Creato_da = creatore;
 		this.Data_ins = datains;
 		this.Admin = ad;
+		this.Attivo = at;
 	}
 	
 	public Utenti(ResultSet resultSet){
@@ -50,6 +52,7 @@ public class Utenti{
 		this.Creato_da = resultSet.getInt("Creato_da");
 		this.Data_ins = resultSet.getString("Data_ins");
 		this.Admin = resultSet.getBoolean("Admin");
+		this.Attivo = resultSet.getBoolean("Attivo");
 		}
 		catch(SQLException e){e.getStackTrace();}
 	}
@@ -68,6 +71,7 @@ public class Utenti{
 				this.Creato_da = obj.getInt("Creato_da");
 				this.Data_ins = obj.getString("Data_ins");
 				this.Admin = obj.getBoolean("Admin");
+				this.Attivo = obj.getBoolean("Attivo");
 			}
 			catch(Exception e){e.getStackTrace();}
 			
@@ -85,7 +89,8 @@ public class Utenti{
 				"\"Citta\":\""+this.Citta+"\","+
 				"\"Creato_da\":\""+this.Creato_da+"\","+
 				"\"Data_ins\":\""+this.Data_ins+"\","+
-				"\"Admin\":\""+this.Admin+"\"}";
+				"\"Admin\":\""+this.Admin+"\","+
+				"\"Attivo\":\""+this.Attivo+"\"}";
 	}//end toJson
 	
 	public int getID(){return this.ID;}
@@ -116,7 +121,9 @@ public class Utenti{
 	public void setData_ins(String inserimento){this.Data_ins = inserimento;}
 	
 	public boolean getAdmin(){return this.Admin;}
-	
 	public void setAdmin(boolean ad){this.Admin = ad;}
+	
+	public boolean getAttivo(){return this.Attivo;}
+	public void setAttivo(boolean at){this.Attivo = at;}
 
 }//end class
