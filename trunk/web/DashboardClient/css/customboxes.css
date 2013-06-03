@@ -1,3 +1,4 @@
+/*------------------------------dettaglio.html/box embedeed con carrot------------------------*/
 #carrot {
 	padding-left: 19px;
 }
@@ -8,4 +9,68 @@
 
 #span_link_plus {
 	margin-top: 20px;
+}
+/*------------------------------------login.html---------------------------------------------*/
+#errore-pwd{
+	display:none;
+	color:red;
+	background: -webkit-gradient(linear, right top, left bottom, from(#ff8182), to(white));
+	background: -moz-linear-gradient(100% 100% 180deg, #ff8182, white);
+
+}
+
+#errore-pwd-in{
+	display:none;
+	color:red;
+	background: -webkit-gradient(linear, right top, left bottom, from(#ff8182), to(white));
+	background: -moz-linear-gradient(100% 100% 180deg, #ff8182, white);
+
+}
+
+#form{
+display:none;
+}
+
+#send{
+margin-left: 18%;}
+
+/*-----------------------------------register.html--------------------------------------------*/
+#register-box{
+width:50%;
+}
+
+
+#errore-div{
+	display:none;
+	color:red;
+	background: -webkit-gradient(linear, right top, left bottom, from(#ff8182), to(white));
+	background: -moz-linear-gradient(100% 100% 180deg, #ff8182, white);
+
+}
+
+#errore{
+	display:none;
+	color:red;
+	background: -webkit-gradient(linear, right top, left bottom, from(#ff8182), to(white));
+	background: -moz-linear-gradient(100% 100% 180deg, #ff8182, white);
+
+}
+
+#birth-reg:{
+border:10px;
+font-family:monaco;
+font-size:100%;
+color:black;
+position:relative;
+}
+#birth-d{
+width:15%
+}
+
+#birth-m{
+width:15%
+}
+
+#birth-a{
+width:15%
 }
