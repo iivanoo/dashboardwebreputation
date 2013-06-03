@@ -61,19 +61,15 @@ public class DeleteAccessoPerUtente {
 			int idfonte=0;
 			Connection conn_fonte = DbManager.getConnection();
 			Statement stmt_fonte = conn_fonte.createStatement();
-			if(pagina.equals("null")){
+			if(pagina.equals("null") || pagina.equals("public")){
 				sql = "SELECT ID FROM Sorgenti WHERE Nome = '"+fonte+"'";
-
-			}
-			else if(pagina.equals("public")){
-				sql = "SELECT ID FROM Sorgenti WHERE Nome = '"+fonte+"' AND Pagina IS NULL";
 
 			}
 			else{
 				 sql = "SELECT ID FROM Sorgenti WHERE Nome = '"+fonte+"' AND Pagina ='"+pagina+"'";
 
 			};
-			
+			System.out.println(sql);
 			ResultSet rset = stmt_fonte.executeQuery(sql);
 			while(rset.next()){
 			idfonte = Integer.parseInt(rset.getObject("ID").toString());

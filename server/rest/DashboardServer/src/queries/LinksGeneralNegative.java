@@ -35,7 +35,7 @@ public class LinksGeneralNegative {
 	
 	private String getLinks(int idutente,String nome,int inf, int sup) throws Exception {
 
-		String links ="[";
+		String links ="[ ";
 		List<String> sorgenti = new ArrayList<String>();
 		Connection conn_b = DbManager.getConnection();
 		Statement stmt_b = conn_b.createStatement();

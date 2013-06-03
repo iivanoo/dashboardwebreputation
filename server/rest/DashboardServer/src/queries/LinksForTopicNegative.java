@@ -35,7 +35,7 @@ public class LinksForTopicNegative {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getLinksForTopic(@PathParam("IDUtente") int idutente,@PathParam("IDFonte") int id,@PathParam("topic") String topic, @PathParam("inf") int inf, @PathParam("sup") int sup) {
-		String result = "[";
+		String result = "[ ";
 		try {
 			List<String> links = this.getLinks(idutente, id, topic,inf,sup);
 			for(int i=0; i<links.size(); i++) {

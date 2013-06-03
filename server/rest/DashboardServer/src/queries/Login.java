@@ -18,7 +18,7 @@ import javax.ws.rs.PathParam;
 public class Login {
 
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String getAllAccessoJSON(@PathParam("email") String email, @PathParam("pwd") String pwd) {
 		String result = "";
 		try {
