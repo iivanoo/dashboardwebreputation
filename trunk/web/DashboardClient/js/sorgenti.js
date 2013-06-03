@@ -95,7 +95,7 @@ var plot;
 		
 		
 		
-                //creazione array di fonti  --->sar√† un array di array(data,numeropost)
+                //creazione array di fonti  --->sarÃ  un array di array(data,numeropost)
                 var fonti=new Array(); 
                 
                 
@@ -139,7 +139,7 @@ var plot;
 					 xaxis: { mode: "time",
 							ticks: [data_post[0],data_post[1],data_post[2],data_post[3],data_post[4],data_post[5]]
 					 		},
-				   yaxis: { min: 0, max: max },  //il primo è l'etichetta del paramentro, il secondo max è il numero max di post esistenti
+				   yaxis: { min: 0, max: max },  //il primo  l'etichetta del paramentro, il secondo max  il numero max di post esistenti
 				   colors: ["blue","red"]
 				 });
 
@@ -179,7 +179,7 @@ var plot;
                 
 
     //settaggio dati per i bobble
-    function Sorgente(nomeS, post0, post1, post2, post3, post4, post5,pol0,pol1,pol2,pol3,pol4,pol5){ //post0 = numero post 6 sett fa. post5 numeo post odierni, analogamente le polarit√†
+    function Sorgente(nomeS, post0, post1, post2, post3, post4, post5,pol0,pol1,pol2,pol3,pol4,pol5){ //post0 = numero post 6 sett fa. post5 numeo post odierni, analogamente le polaritÃ 
              this.numeroPost=new Array();
             this.numeroPost[0]=post0;
             this.numeroPost[1]=post1;
