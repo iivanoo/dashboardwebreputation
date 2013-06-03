@@ -20,7 +20,7 @@ import db.DbManager;
 import java.sql.*;
 
 @Path("/Topics/search/id={ID}")
-public class TopicsResurce {
+public class TopicsResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
