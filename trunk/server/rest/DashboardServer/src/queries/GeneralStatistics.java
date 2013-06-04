@@ -16,17 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.PathParam;
 
-@Path("/Sorgenti/grafico/general/nomefonte={Nome_fonte}/data1={Data1}/data2={Data2}/data3={Data3}/data4={Data4}/data5={Data5}/data6={Data6}/data7={Data7}")  //Data1 < Data2 & formato: AAAA-MM-GG
+@Path("/Sorgenti/grafico/general/utente={Idutente}/nomefonte={Nome_fonte}/data1={Data1}/data2={Data2}/data3={Data3}/data4={Data4}/data5={Data5}/data6={Data6}/data7={Data7}")  //Data1 < Data2 & formato: AAAA-MM-GG
 public class GeneralStatistics{
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getGeneralStatistics(@PathParam("Nome_fonte") String nome, @PathParam("Data1") String d1, @PathParam("Data2") String d2, @PathParam("Data3") String d3, @PathParam("Data4") String d4, @PathParam("Data5") String d5, @PathParam("Data6") String d6, @PathParam("Data7") String d7) {
+	public String getGeneralStatistics(@PathParam("Idutente") int id,@PathParam("Nome_fonte") String nome, @PathParam("Data1") String d1, @PathParam("Data2") String d2, @PathParam("Data3") String d3, @PathParam("Data4") String d4, @PathParam("Data5") String d5, @PathParam("Data6") String d6, @PathParam("Data7") String d7) {
 		//String result = "[";
 		String result = "";
 		try {
 			
-			result = this.getSorgenti(nome,d1,d2, d3,d4,d5,d6,d7);
+			result = this.getSorgenti(id,nome,d1,d2, d3,d4,d5,d6,d7);
 			
 			
 		}
@@ -38,7 +38,7 @@ public class GeneralStatistics{
 	}
 
 	
-	private String getSorgenti(String nome, String d1, String d2, String d3, String d4, String d5, String d6, String d7) throws Exception {
+	private String getSorgenti(int id,String nome, String d1, String d2, String d3, String d4, String d5, String d6, String d7) throws Exception {
 		int count;
 		Connection conn;
 		Statement stmt;
@@ -54,7 +54,7 @@ public class GeneralStatistics{
 		//prima settimana----------------------------------------------------------------------
 		conn = DbManager.getConnection();
 		stmt = conn.createStatement();
-		rset = stmt.executeQuery("SELECT Post.ID AS label FROM Post INNER JOIN Sorgenti WHERE Post.Data BETWEEN '"+d1+"' AND '"+d2+"' AND Post.ID_Fonte = Sorgenti.ID AND Sorgenti.Nome = '"+nome+"';");
+		rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post  WHERE Post.Data BETWEEN '"+d1+"' AND '"+d2+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 		count = 0;
 		while (rset.next()) {
 			count++;
@@ -68,7 +68,7 @@ public class GeneralStatistics{
 		List<Integer> neg1 = new ArrayList<Integer>();
 		conn_neg = DbManager.getConnection();
 		stmt_neg = conn_neg.createStatement();
-		rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d2+"';");
+		rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d2+"';");
 		int count_neg = 0;
 		while (rset_neg.next()) {
 			count_neg++;
@@ -85,7 +85,7 @@ public class GeneralStatistics{
 		List<Integer> pos1 = new ArrayList<Integer>();
 		conn_pos = DbManager.getConnection();
 		stmt_pos = conn_pos.createStatement();
-		rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d2+"';");
+		rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d2+"';");
 		int count_pos = 0;
 		while (rset_pos.next()) {
 			count_pos++;
@@ -110,7 +110,7 @@ public class GeneralStatistics{
 	//seconda settimana----------------------------------------------------------------------
 	conn = DbManager.getConnection();
 	stmt = conn.createStatement();
-	rset = stmt.executeQuery("SELECT Post.ID AS label FROM Post INNER JOIN Sorgenti WHERE Post.Data BETWEEN '"+d2+"' AND '"+d3+"' AND Post.ID_Fonte = Sorgenti.ID AND Sorgenti.Nome = '"+nome+"';");
+	rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d2+"' AND '"+d3+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 	count = 0;
 	
 	while (rset.next()) {
@@ -126,7 +126,7 @@ public class GeneralStatistics{
 	List<Integer> neg2 = new ArrayList<Integer>();
 	conn_neg = DbManager.getConnection();
 	stmt_neg = conn_neg.createStatement();
-	rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p  WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d3+"';");
+	rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN  Sorgenti AS s INNER JOIN Post AS p  WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d3+"';");
 	 count_neg = 0;
 	while (rset_neg.next()) {
 		count_neg++;
@@ -143,7 +143,7 @@ public class GeneralStatistics{
 	List<Integer> pos2 = new ArrayList<Integer>();
 	conn_pos = DbManager.getConnection();
 	stmt_pos = conn_pos.createStatement();
-	rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d3+"';");
+	rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d3+"';");
 	count_pos = 0;
 	while (rset_pos.next()) {
 		count_pos++;
@@ -169,7 +169,7 @@ public class GeneralStatistics{
 //terza settimana----------------------------------------------------------------------
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT Post.ID AS label FROM Post INNER JOIN Sorgenti WHERE Post.Data BETWEEN '"+d3+"' AND '"+d4+"' AND Post.ID_Fonte = Sorgenti.ID AND Sorgenti.Nome = '"+nome+"';");
+rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d3+"' AND '"+d4+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID  AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 count = 0;
 
 while (rset.next()) {
@@ -185,7 +185,7 @@ conn.close();
 List<Integer> neg3 = new ArrayList<Integer>();
 conn_neg = DbManager.getConnection();
 stmt_neg = conn_neg.createStatement();
-rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d4+"';");
+rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID  AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d4+"';");
  count_neg = 0;
 while (rset_neg.next()) {
 	count_neg++;
@@ -202,7 +202,7 @@ conn_neg.close();
 List<Integer> pos3 = new ArrayList<Integer>();
 conn_pos = DbManager.getConnection();
 stmt_pos = conn_pos.createStatement();
-rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d4+"';");
+rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d4+"';");
 count_pos = 0;
 while (rset_pos.next()) {
 	count_pos++;
@@ -228,7 +228,7 @@ if(numeropost3!=0){
 //quarta settimana----------------------------------------------------------------------
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT Post.ID AS label FROM Post INNER JOIN Sorgenti WHERE Post.Data BETWEEN '"+d4+"' AND '"+d5+"' AND Post.ID_Fonte = Sorgenti.ID AND Sorgenti.Nome = '"+nome+"';");
+rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d4+"' AND '"+d5+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 count = 0;
 
 while (rset.next()) {
@@ -244,7 +244,7 @@ conn.close();
 List<Integer> neg4 = new ArrayList<Integer>();
 conn_neg = DbManager.getConnection();
 stmt_neg = conn_neg.createStatement();
-rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d5+"';");
+rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d5+"';");
 count_neg = 0;
 while (rset_neg.next()) {
 	count_neg++;
@@ -261,7 +261,7 @@ conn_neg.close();
 List<Integer> pos4 = new ArrayList<Integer>();
 conn_pos = DbManager.getConnection();
 stmt_pos = conn_pos.createStatement();
-rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p  WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d5+"';");
+rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p  WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d5+"';");
 count_pos = 0;
 while (rset_pos.next()) {
 	count_pos++;
@@ -289,7 +289,7 @@ if(numeropost4!=0){
 //quinta settimana----------------------------------------------------------------------
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT Post.ID AS label FROM Post INNER JOIN Sorgenti WHERE Post.Data BETWEEN '"+d5+"' AND '"+d6+"' AND Post.ID_Fonte = Sorgenti.ID AND Sorgenti.Nome = '"+nome+"';");
+rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS Acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d5+"' AND '"+d6+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 count = 0;
 
 while (rset.next()) {
@@ -305,7 +305,7 @@ conn.close();
 List<Integer> neg5 = new ArrayList<Integer>();
 conn_neg = DbManager.getConnection();
 stmt_neg = conn_neg.createStatement();
-rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d6+"';");
+rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d6+"';");
 count_neg = 0;
 while (rset_neg.next()) {
 	count_neg++;
@@ -322,7 +322,7 @@ conn_neg.close();
 List<Integer> pos5 = new ArrayList<Integer>();
 conn_pos = DbManager.getConnection();
 stmt_pos = conn_pos.createStatement();
-rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d6+"';");
+rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN  Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d6+"';");
 count_pos = 0;
 while (rset_pos.next()) {
 	count_pos++;
@@ -345,7 +345,7 @@ if(numeropost5!=0){
 //sesta settimana----------------------------------------------------------------------
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT Post.ID AS label FROM Post INNER JOIN Sorgenti WHERE Post.Data BETWEEN '"+d6+"' AND '"+d7+"' AND Post.ID_Fonte = Sorgenti.ID AND Sorgenti.Nome = '"+nome+"';");
+rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d6+"' AND '"+d7+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 count = 0;
 
 while (rset.next()) {
@@ -361,7 +361,7 @@ conn.close();
 List<Integer> neg6 = new ArrayList<Integer>();
 conn_neg = DbManager.getConnection();
 stmt_neg = conn_neg.createStatement();
-rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d6+"' AND '"+d7+"';");
+rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID  AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d6+"' AND '"+d7+"';");
 count_neg = 0;
 while (rset_neg.next()) {
 	count_neg++;
@@ -378,7 +378,7 @@ conn_neg.close();
 List<Integer> pos6 = new ArrayList<Integer>();
 conn_pos = DbManager.getConnection();
 stmt_pos = conn_pos.createStatement();
-rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d6+"' AND '"+d7+"';");
+rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d6+"' AND '"+d7+"';");
 count_pos = 0;
 while (rset_pos.next()) {
 	count_pos++;

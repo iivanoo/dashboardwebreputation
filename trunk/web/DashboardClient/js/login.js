@@ -1,9 +1,25 @@
-	var p = document.getElementById("pwd-div");
-		var e = document.getElementById("mail-div");
-	    var err = document.getElementById("errore-pwd");
-	    var err_in = document.getElementById("errore-pwd-in");
-	   
+var p = document.getElementById("pwd-div");
+var e = document.getElementById("mail-div");
+var err = document.getElementById("errore-pwd");
+var err_in = document.getElementById("errore-pwd-in");
+$("#login").attr("disabled",true);
 	    
+/*-----------------------------validazione------------------------------------------*/
+var val_pwd = document.getElementById("password");
+
+$(val_pwd).attr("onkeyup","validazione();");
+function validazione(){
+	
+	var pattern = "['=]";
+	if(val_pwd.value.match(pattern))
+	{alert("match");}
+	else{
+		$("#login").attr("disabled",false);
+	};
+
+};//end validazione
+	    
+/*-------------------------validazione superata-------------------------------------*/	    
 $("#login").click(function(){
 	 var remember = document.getElementById("remember").checked;
 	eraseCookie("idutente");
