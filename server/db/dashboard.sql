@@ -129,7 +129,7 @@ INSERT INTO `Post` (`ID`, `Link`, `Data`, `Polarity`, `ID_Fonte`, `Text`) VALUES
 CREATE TABLE IF NOT EXISTS `Sorgenti` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(30) NOT NULL,
-  `Pagina` varchar(50) DEFAULT NULL,
+  `Pagina` varchar(500) DEFAULT NULL,
   `Link` varchar(500) NOT NULL,
   `Tipo` varchar(30) NOT NULL,
   `Autore` int(11) NOT NULL,
