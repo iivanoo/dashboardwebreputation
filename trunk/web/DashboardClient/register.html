@@ -85,11 +85,32 @@
 									type="text" placeholder="Cognome"/>
 									</div>
 							
-							<div title="birth" id="birth-reg">
+							<div class="input-prepend" title="Birth" id="birth">
+							<span class="add-on"><i class="icon-calendar"></i></span>
+							<input class="input-large span10" name="birthday" id="birthday"
+									type="text" placeholder="Data di nascita"/>
+							</div>
 							
-									</div>
+							<div class="input-prepend" title="Citta">
+							<span class="add-on"><i class="icon-globe"></i></span>
+							<input class="input-large span10" name="citta" id="citta"
+									type="text" placeholder="Citt&agrave"/>
+							</div>
 							
-						
+							<div id="adm" class="input-prepend">
+							<span class="add-on">
+							Permessi da amministratore:
+							<input id="admin-reg" type="checkbox"/>
+							</span>
+							</div>
+							
+							<div id="att" class="input-prepend">
+							<span class="add-on">
+							Utente attivo:
+							<input id="attivo-reg" type="checkbox"/>
+							</span>
+							</div>
+							
 							
 							<div class="clearfix"></div>
 							
@@ -154,10 +175,14 @@
 
 	<script src="js/custom.js"></script>
 
-	<script src="js/login.js"></script>
+	
 	<script src="js/md5.js"></script>
-		<script src="js/cookies.js"></script>
+	<script src="js/cookies.js"></script>
+	<script src="js/register.js"></script>
 	<!-- end: JavaScript-->
 
 </body>
 </html>
+
+
+

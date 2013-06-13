@@ -57,7 +57,7 @@ public class LinksForTopic {
 for(int x=0;x<sorgenti.size();x++){
 		Connection conn = DbManager.getConnection();
 		Statement stmt = conn.createStatement();
-		ResultSet rset = stmt.executeQuery("SELECT DISTINCT p.Link AS label, p.Text AS testo FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.ID = p.ID_Fonte AND (s.Nome = \""+sorgenti.get(x)+"\" OR s.Pagina=\""+sorgenti.get(x)+"\") AND acc.IDUtente = "+idutente+" LIMIT "+inf+","+sup+";");
+		ResultSet rset = stmt.executeQuery("SELECT DISTINCT p.Link AS label, p.Text AS testo FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE p.ID = c.IDPost AND c.IDTopic = t.ID AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.ID = p.ID_Fonte AND (s.Nome = \""+sorgenti.get(x)+"\" OR s.Pagina=\""+sorgenti.get(x)+"\") AND acc.IDUtente = "+idutente+" AND t.Topic='"+topic+"' LIMIT "+inf+","+sup+";");
 		links += "{\"nome\":\""+sorgenti.get(x)+"\",\"links\":[ ";
 		while (rset.next()) {
 			

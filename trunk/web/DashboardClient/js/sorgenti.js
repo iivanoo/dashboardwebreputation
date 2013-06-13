@@ -9,7 +9,20 @@ $(document).ready(function(){
 	
 	
 	if(ut==null){window.location = "login.html";}
-	else{fill();
+	else{
+		
+		
+	    $.get("http://localhost:8080/DashboardServer/api/Utenti/id/id="+ut,function(dati){
+	    	var dati = {utente : dati.Email};
+			var struttura = document.getElementById("utente-template").innerHTML;
+		    var template = Handlebars.compile(struttura);
+		    var html = template(dati);
+		    document.getElementById("etichetta-utente").innerHTML = html;
+		});
+		
+
+		
+	fill();
 	console.log(document.cookie);};
 	}); //end ready index
 
