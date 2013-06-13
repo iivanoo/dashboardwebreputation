@@ -42,23 +42,32 @@
 				<div class="login-box" id="register-box">
 				
 					<br>
-					<h2>Inserisci i tuoi dati</h2>
+					<h2>Inserisci i dati dell'utente</h2>
 					
 					<form id="register-form" class="form-horizontal">
 						<fieldset>
-							<div class="input-prepend" title="Errore" id="errore-div">
-								</span> <input class="input-large span10" id="errore"
-									type="text"/>
+							
+							<div class="input-prepend" title="Errore" id="errore-username">
+								</span> <div class="input-large span10 errore" >Errore: controlla il formato dell'E-mail</div>
 							</div>
-
-
-							<div class="input-prepend" title="Username" id="user-div">
+								<div class="input-prepend" title="Username" id="user-div">
 								<span class="add-on"><i class="icon-envelope"></i>
 								</span> <input class="input-large span10" name="username" id="username-reg"
 									type="text" placeholder="Email" />
 							</div>
 							<div class="clearfix"></div>
-
+						
+							<div class="input-prepend" title="Errore" id="errore-password">
+								</span> 
+									<div class="input-large span10 errore">
+									Errore! la password deve:
+									<ul>
+									<li>contenere almeno un numero;</li>
+									<li>avere una lunghezza compresa tra 6 e 12 caratteri;</li>
+									</ul>
+									</div>
+							</div>
+							
 							<div class="input-prepend" title="Password" id="pwd-reg-div">
 								<span class="add-on"><i class="icon-lock"></i>
 								</span> <input class="input-large span10" name="password" id="password-reg"
@@ -66,31 +75,43 @@
 									
 									</div>
 							
+							<div class="input-prepend" title="Errore" id="errore-confirm">
+								</span> <div class="input-large span10 errore" >Errore: la password inserita non corrisponde con la precedente!</div>
+							</div>
 							<div class="input-prepend" title="Password" id="confirm-pwd-reg-div">
 								<span class="add-on"><i class="icon-lock"></i>
 								</span> <input class="input-large span10" name="confirm-password" id="confirm-password-reg"
 									type="password" placeholder="Ripeti password"/>
 									</div>
 							
-							
+							<div class="input-prepend" title="Errore" id="errore-nome">
+								</span> <div class="input-large span10 errore" >Errore: il nome non può contenere numeri e/o simboli!</div>
+							</div>
 							<div class="input-prepend" title="Nome" id="nome-utente">
 								<span class="add-on"><i class="icon-user"></i>
 								</span> <input class="input-large span10" name="nome-utente" id="nome-reg"
 									type="text" placeholder="Nome"/>
 									</div>
 							
+							
+							<div class="input-prepend" title="Errore" id="errore-cognome">
+								</span> <div class="input-large span10 errore" >Errore: il cognome non può contenere numeri e/o simboli!</div>
+							</div>
 							<div class="input-prepend" title="Cognome" id="cognome-utente">
 								<span class="add-on"><i class="icon-user"></i>
 								</span> <input class="input-large span10" name="cognome-utente" id="cognome-reg"
 									type="text" placeholder="Cognome"/>
 									</div>
-							
+	<!--  DATEPICKER non funziona su ie e su firefox!! -->
 							<div class="input-prepend" title="Birth" id="birth">
 							<span class="add-on"><i class="icon-calendar"></i></span>
 							<input class="input-large span10" name="birthday" id="birthday"
 									type="text" placeholder="Data di nascita"/>
 							</div>
 							
+							<div class="input-prepend" title="Errore" id="errore-citta">
+								</span> <div class="input-large span10 errore" >Errore: la citt&agrave non pu&ograve contenere numeri e/o simboli!)</div>
+							</div>
 							<div class="input-prepend" title="Citta">
 							<span class="add-on"><i class="icon-globe"></i></span>
 							<input class="input-large span10" name="citta" id="citta"
@@ -113,10 +134,13 @@
 							
 							
 							<div class="clearfix"></div>
-							
+							<div class="input-prepend" title="Errore" id="errore-general">
+								</span> <div class="input-large span10 errore" >Ci sono campi vuoti, devi riempirli per procedere!</div>
+							</div>
 							<div id="btn-g" class="btn-group button-login">
-								
-								<button id="login" type="button" class="btn btn-primary">
+								<button id="reset" type="reset" class="btn btn-primary">
+								<i class="icon-remove icon-white"></i> Pulisci tutti i campi</button>
+								<button id="register" type="button" class="btn btn-primary" disabled>
 								<i class="icon-ok icon-white"></i> Conferma</button>
 							</div>
 							<div class="clearfix"></div>
