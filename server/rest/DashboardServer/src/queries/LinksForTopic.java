@@ -83,5 +83,5 @@ for(int x=0;x<sorgenti.size();x++){
 	
 }
 
-//restituisce i link relativi ad un topic a prescindere dalla polaritˆ
-//TODO nel lato client inserire il controllo: se pagina NOT NULL allora l'etichetta del bobble  la pagina altrimenti  il nome della fonte, ma non ripetuto
+//restituisce i link relativi ad un topic a prescindere dalla polarità
+//TODO nel lato client inserire il controllo: se pagina NOT NULL allora l'etichetta del bobble è la pagina altrimenti è il nome della fonte, ma non ripetuto
