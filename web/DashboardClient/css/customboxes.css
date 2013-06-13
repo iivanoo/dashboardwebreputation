@@ -48,18 +48,15 @@ width:50%;
 }
 
 
-#errore-div{
-	display:none;
-	color:red;
+.errore{
+	color:#706d73;
+	text-align:left;
+	padding-left:4.5%;
 	background: -webkit-gradient(linear, right top, left bottom, from(#ff8182), to(white));
 	background: -moz-linear-gradient(100% 100% 180deg, #ff8182, white);
-
+	font-family:monaco;
+	font-size:12px;
 }
 
-#errore{
-	display:none;
-	color:red;
-	background: -webkit-gradient(linear, right top, left bottom, from(#ff8182), to(white));
-	background: -moz-linear-gradient(100% 100% 180deg, #ff8182, white);
-
-}
+#errore-username, #errore-password, #errore-confirm, #errore-nome, #errore-cognome, #errore-citta, #errore-general{
+display:none;}
