@@ -63,22 +63,3 @@ width:50%;
 	background: -moz-linear-gradient(100% 100% 180deg, #ff8182, white);
 
 }
-
-#birth-reg:{
-border:10px;
-font-family:monaco;
-font-size:100%;
-color:black;
-position:relative;
-}
-#birth-d{
-width:15%
-}
-
-#birth-m{
-width:15%
-}
-
-#birth-a{
-width:15%
-}
