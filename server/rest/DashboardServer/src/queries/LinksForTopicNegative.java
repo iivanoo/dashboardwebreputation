@@ -1,3 +1,4 @@
+
 package queries;
 
 import javax.ws.rs.GET;
@@ -11,48 +12,74 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.PathParam;
 
-@Path("/links/topic/negative/idutente={IDUtente}/idfonte={IDFonte}/topic={topic}/limit={inf}-{sup}")
+@Path("/links/topic/negative/topic={topic}/idutente={IDUtente}/nomefonte={NomeFonte}/limit={inf}-{sup}")
 public class LinksForTopicNegative {
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getLinksForTopic(@PathParam("IDUtente") int idutente,@PathParam("IDFonte") int id,@PathParam("topic") String topic, @PathParam("inf") int inf, @PathParam("sup") int sup) {
-		String result = "[ ";
+	public String getLinksGeneral(@PathParam("topic") String topic, @PathParam("IDUtente") int idutente,@PathParam("NomeFonte") String nome, @PathParam("inf") int inf, @PathParam("sup") int sup) {
+		String result="";
 		try {
-			List<String> links = this.getLinks(idutente, id, topic,inf,sup);
-			for(int i=0; i<links.size(); i++) {
-				result += links.get(i);
-				if(i != links.size() - 1) {
-					result += ",";
-				}
-			}
-			result += "]";
+			result = this.getLinks(topic,idutente,nome,inf,sup);
+			
+				
+			
+	
 		}
 		catch (Exception exc) {
 			//result = "{\"error\":{\"text\":" + exc.getMessage() + "}}";
-			//System.out.println("Error: "+ exc.getMessage());
+			System.out.println("Error: "+ exc.getMessage());
 		}
 		return result;
 	}
 
 	
-	private List<String> getLinks(int idutente, int id, String topic, int inf, int sup) throws Exception {
-		List<String>links = new ArrayList<String>();
+	private String getLinks(String topic, int idutente, String nome,int inf, int sup) throws Exception {
+		
+		String links ="[ ";
+		List<String> sorgenti = new ArrayList<String>();
+		Connection conn_b = DbManager.getConnection();
+		Statement stmt_b = conn_b.createStatement();
+		ResultSet rset_b = stmt_b.executeQuery("SELECT DISTINCT s.Pagina AS label FROM Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND t.ID = c.IDTopic AND (s.Nome = \""+nome+"\" OR s.Pagina=\""+nome+"\")  AND s.Pagina IS NOT NULL AND s.ID = acc.IDSorgente AND acc.IDUtente = "+idutente+" UNION SELECT DISTINCT s.Nome AS label FROM Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND t.ID = c.IDTopic AND s.Nome LIKE '"+nome+"' AND s.Pagina IS NULL AND s.ID = acc.IDSorgente AND acc.IDUtente = "+idutente+";");
+		while (rset_b.next()) {
+			
+			String st_b = rset_b.getObject("label").toString();
+			sorgenti.add(st_b);
+			
+		}
+		
+		rset_b.close();
+		stmt_b.close();
+		conn_b.close();
+		
+	
+		
+		
+for(int x=0;x<sorgenti.size();x++){
 		Connection conn = DbManager.getConnection();
 		Statement stmt = conn.createStatement();
-		ResultSet rset = stmt.executeQuery("SELECT DISTINCT p.Link AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN  Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE u.ID = acc.IDUtente AND acc.IDSorgente=s.ID AND p.ID = c.IDPost AND c.IDTopic=t.ID AND p.ID_Fonte = s.ID AND p.ID_Fonte ="+id+" AND t.Topic = '" + topic + "' AND acc.IDUtente = "+idutente+" AND p.Polarity = '-1' LIMIT "+inf+" , "+sup+";");
+		ResultSet rset = stmt.executeQuery("SELECT DISTINCT p.Link AS label, p.Text AS testo FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND (s.Nome = \""+sorgenti.get(x)+"\" OR s.Pagina=\""+sorgenti.get(x)+"\") AND acc.IDUtente = "+idutente+" AND p.Polarity='-1' AND t.Topic='"+topic+"' LIMIT "+inf+","+sup+";");
+		links += "{\"nome\":\""+sorgenti.get(x)+"\",\"links\":[ ";
 		while (rset.next()) {
 			
 			String st = rset.getObject("label").toString();
-			links.add(st);
+			String tes = rset.getObject("testo").toString();
+			if (tes.length() != 0 && tes.length()>25){tes = tes.substring(0,25)+"...";}
+			else if (tes.length() == 0){tes = st;};
+			
+			links += "{\"link\":\""+st+"\",\"testo\":\""+tes+"\"},";
+			
 		}
-		
+		links = links.substring(0,links.length()-1);
+		links += "]},";
 		rset.close();
 		stmt.close();
 		conn.close();
+};//end for x
+		
+		links = links.substring(0,links.length()-1)+"]";
 	
 		return links;
 	}
 	
 }
-//restituisce i link relativi ad al topic cercato per la fonte specifica cliccata nel box carrot

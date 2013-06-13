@@ -779,8 +779,6 @@ function dettaglio_fill(){
 	var s1 = new Array();
 	 $.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente="+readCookie("idutente"),function(nomi){
 	
-	
-		
 		 $.get("http://localhost:8080/DashboardServer/api/Sorgenti/grafico/general/utente="+ut+"/nomefonte="+readCookie("fontecliccata")+"/data1="+dat_strings[0]+"/data2="+dat_strings[1]+"/data3="+dat_strings[2]+"/data4="+dat_strings[3]+"/data5="+dat_strings[4]+"/data6="+dat_strings[5]+"/data7="+dat_strings[6],function(data){
 			 var par = $.parseJSON(data);
 			 s1.push(new Sorgente(par.nomefonte, par.settimana1.numeropost,par.settimana2.numeropost,par.settimana3.numeropost,par.settimana4.numeropost,par.settimana5.numeropost,par.settimana6.numeropost, par.settimana1.gradimento, par.settimana2.gradimento,par.settimana3.gradimento, par.settimana4.gradimento, par.settimana5.gradimento, par.settimana6.gradimento));
