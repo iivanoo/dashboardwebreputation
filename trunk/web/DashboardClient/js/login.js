@@ -44,9 +44,19 @@ $("#login").click(function(){
 			 $(p).css("border-color","white");
 			$.get("http://localhost:8080/DashboardServer/api/Utenti/email/email="+username,function(utente){
 				if(remember){createCookie("idutente",utente.ID,100);}else{createCookie("idutente",utente.ID,0.5);};
-				
-				window.location = "index.html";
+				if(utente.Admin){$("#gestione").css("display","inline");}else{$("#gestione").css("display","none");};
+			$.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente="+utente.ID,function(accesso){
+				if(accesso[0].length == 0){
+					eraseCookie("fontecliccata");
+					eraseCookie("idutente");
+					$(err).val("Non disponi dei permessi necessari all'accesso!");
+					 $(err).css("display","inline");
+					}
+				else{window.location = "index.html";};
+				})
+
 			});//end recupero id utente
+			
 		}
 		else{
 	    

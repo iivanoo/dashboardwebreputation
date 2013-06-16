@@ -23,6 +23,7 @@
 <link id="bootstrap-style" href="css/customboxes.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/2.0.2/optional/css/common.css" />
 <link rel="stylesheet" href="assets/2.0.2/optional/css/layout.css" />
+     <link rel="stylesheet" href="css/customboxes.css" />
 
 
 <!-- end: CSS -->
@@ -119,8 +120,8 @@
 
 				<div>
 					<ul class="breadcrumb">
-						<li><a href="#">Home</a> <span class="divider">/</span></li>
-						<li><a href="#">Dashboard</a></li>
+						<li>Home<span class="divider">/</span></li>
+						<li id="referer"></li>
 					</ul>
 				</div>
 
@@ -141,177 +142,146 @@
 					</div>
 
 				</div>
+<br>
+				<hr style="margin-top: 28px; visibility:hidden;">
 
-				<hr>
-				<hr style="margin-top: 28px">
+				<div class="row-fluid">
+				
 
-				<div class="row-fluid" style="height: 400px;">
-
-					<div class="box span8" style="width: 30%; height: 300px;">
+				<!-- grafico -->
+				<div class="box span4">
 						<div class="box-header">
 							<h2>
-								<i class="icon-signal"></i><span class="break"></span>Topic
+								<i class="icon-signal"></i><span class="break"></span>Post
 								Statistics
 							</h2>
-							<!--<div class="box-icon">
-								<a href="#" class="btn-setting"><i class="icon-wrench"></i>
-								</a> <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
-								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
-								</a>
-							</div>-->
+							
 						</div>
-						<div class="box-content" style="height: 300px;">
-							<div id="sincos" class="center" style="height: 300px;"></div>
+						<div class="box-content">
+							<div id="sincos" class="center" style="height:300px;"></div>
 						</div>
 					</div>
 
-					<div id="carrot" class="box span4" style="height: 300px;">
-						<div class="box-header">
-							<h2>
-								<i class="icon-list-alt"></i><span class="break"></span>Topic
-							</h2>
-							<!--<div class="box-icon">
-								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
-								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
-								</a>
-							</div>-->
-						</div>
-						<div class="box-content" style="height: 300px;">
+
+
+				<!-- box di carrot-->
+				<div class="box span4">
+					<div class="box-header">
+						<h2>
+							<i class="icon-signal"></i><span class="break"></span>Topics
+						</h2>
+					</div>
+					<div class="box-content" style="height: 300px;">
                                                     <!--carrot-->
-                                                 <div id="overlay2"></div><div id="loading2" >Loading...</div>
-                                                <div id="visualization2" ></div>
+                             <div id="overlay2"></div>
+                             <div id="loading2" >Loading...</div>
+                            <div id="visualization2" ></div>
                                                 
                                                 
                                                 
-                                                </div></div>
-					<!--/span-->
+                         </div>
+				</div>
 
-					<div id="elenco_link" class="box span4">
-						<div class="box-header">
-							<h2>
-								<i class="icon-list-alt"></i><span class="break"></span>Links
-							</h2>
-							<!--<div class="box-icon">
-								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
-								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
-								</a>
-							</div>-->
-						</div>
-						<div id="elenco_link_carrot" class="box-content" style="height: 300px;">
-                                                    <!--inserimento contenuto-->
-                                                        
-                                                </div>
+
+
+
+				<!-- box dei link-->
+				<div class="box span4">
+					<div class="box-header">
+						<h2>
+							<i class="icon-signal"></i><span class="break"></span>Links
+						</h2>
 					</div>
-					<!--/span-->
-
+					<div id="elenco_link_carrot" class="box-content" style="height:300px;"></div>
+				</div>
 
 				</div>
 
-				<hr>
+				<br><hr><br>
 
 				<div class="row-fluid">
 
-					<div class="box span8" style="width: 40%;">
+					<!-- box reputation statistics -->
+					<div class="box span4">
 						<div class="box-header">
 							<h2>
 								<i class="icon-signal"></i><span class="break"></span>Reputation
 								Statistics
 							</h2>
-							<!--<div class="box-icon">
-								<a href="#" class="btn-setting"><i class="icon-wrench"></i>
-								</a> <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
-								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
-								</a>
-							</div>-->
 						</div>
+
 						<div class="box-content">
 
-							<div id="flotchart" class="center" style="height: 364px"></div>
-
-
+							<div id="flotchart" class="center" style="height:500px;"></div>
 						</div>
 					</div>
 
-					<div id="span_carrot_plus" class="span4" style="width: 35%;">
+					<!-- box carrot-plus -->
+					<div class="box span4">
 						<div class="box-header">
 							<h2>
-								<i class="icon-list-alt"></i><span class="break"></span>Topic
-								positivi
+								<i class="icon-list-alt"></i><span class="break"></span>Topic Positivi
+								<i class="icon-thumbs-up"></i>
 							</h2>
-							<!--<div class="box-icon">
-								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
-								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
-								</a>
-							</div>-->
 						</div>
-						<div id="carrot_plus" class="box-content" style="height: 150px;"> <!--carrot positivi-->
+						<div id="carrot_plus" class="box-content" style="height: 195px;">
+							<div id="overlay"></div>
+							<div id="loading" >Loading...</div>
+                            <div id="visualization" ></div>
+                        </div>
+                    </div>
+					
 
-						<div id="overlay"></div><div id="loading" >Loading...</div>
-                                                <div id="visualization" ></div>
-                                                
-                                                
-                                                
-                                                </div></div>
-					<!--/span-->
-
-					<div id="span_link_plus" class="span4" style="width: 19%;">
+                    <!-- links ai post con polarita' positiva -->
+					<div id="span_link_plus" class="box span4">
 						<div class="box-header">
 							<h2>
 								<i class="icon-list-alt"></i><span class="break"></span>Link
 								positivi
 							</h2>
-							<!--<div class="box-icon">
-								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
-								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
-								</a>
-							</div>-->
+							
 						</div>
 						<div id="elenco_link_plus" class="box-content"
-							style="height: 150px;"></div>
+							style="height: 195px;"></div>
 					</div>
-					<!--/span-->
 
 
 
-					<div id="box_carrot_minus" class="span4" style="width: 35%;">
+
+
+
+					<!-- box carrot-minus -->
+					<div class="box span4">
 						<div class="box-header">
 							<h2>
-								<i class="icon-list-alt"></i><span class="break"></span>Topic
-								negativi
+								<i class="icon-list-alt"></i><span class="break"></span>Topic Negativi
+								<i class="icon-thumbs-down"></i>
 							</h2>
-							<!--<div class="box-icon">
-								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
-								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
-								</a>
-							</div>-->
 						</div>
-						<div id="carrot_minus" class="box-content" style="height: 150px;"> <!--carrot negativi-->
-
-						 <div id="overlay3"></div><div id="loading3" >Loading...</div>
-                                                <div id="visualization3" ></div>
-                                                
-                                                
-                                                
-                                                </div></div> 
-    
-                              	<!--/span-->
-
-					<div id="box_link_minus" class="span4" style="width: 19%;">
+						<div id="carrot_minus" class="box-content" style="height: 195px;"> 
+							 <div id="overlay3"></div>
+							 <div id="loading3" >Loading...</div>
+                             <div id="visualization3" ></div>
+                       	</div>
+                    </div> 
+					
+					<!-- links ai post con polarita' negativa -->
+					<div id="span_link_minus" class="box span4">
 						<div class="box-header">
 							<h2>
 								<i class="icon-list-alt"></i><span class="break"></span>Link
 								negativi
 							</h2>
-							<!--<div class="box-icon">
-								<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
-								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
-								</a>
-							</div>-->
+							
 						</div>
 						<div id="elenco_link_minus" class="box-content"
-							style="height: 150px;"></div>
+							style="height: 195px;"></div>
 					</div>
-					<!--/span-->
+
+			
+
+
+
 
 
 				</div>
@@ -384,6 +354,7 @@
             <script src="js/cookies.js"></script>
            
             <script src="js/sorgenti.js"></script>
+             <script src="js/dettaglio.js"></script>
             <script src="js/dettaglio_topic.js"></script>
            
                          
