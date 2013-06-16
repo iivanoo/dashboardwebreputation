@@ -3,8 +3,16 @@ var ex;
 $(document).ready(function(){
     fill();
     fill_tabella();
+    
 });    // end ready function 
-       
+
+$("#no").click(function(){
+	$("#Pincopallino").css("display","none");
+	$("#fonti_tab").css("display","inline");
+});
+
+
+
 
 
 function fill_tabella(){
@@ -20,7 +28,7 @@ function fill_tabella(){
 	    var template = Handlebars.compile(struttura);
 	    var html = template(dati);
 	    document.getElementById("fonti_tab").innerHTML = html;
-	    $("#save").click(function(){
+	    $("#ok").click(function(){
 	        salva_modifiche();
 	        });// end click save
 
@@ -83,7 +91,13 @@ function fill_tabella(){
 	     
 
 	      click_check();
-
+//vanno all'interno della get altrimenti non sono bottoni interagibili
+	      $("#save").click(function(){
+	    	  
+	    	  $("#Pincopallino").css("display","inline");
+	    	  $("#fonti_tab").css("display","none");
+	      });
+	      $("#annulla").click(function(){window.location="index.html";});
 	});
 	
 
@@ -102,6 +116,7 @@ function fill_tabella(){
 	}
 
 	function salva_modifiche(){
+	
 		var item = document.getElementsByTagName("input");
 		for(var i=0; i<item.length; i++){  //parte da 1 xke item[0] coincide con l'input id=typehead
 			var email = item[i].id.split("$")[0];
@@ -141,13 +156,10 @@ function fill_tabella(){
 			};
 		
 		}//end for
-		console.log("cambiamenti salvati");
-		//TODO inserire div al posto dell'alert
-		alert("qui ci va il div di reindirizzamento");
+	window.location = "index.html";
 	}	
 
     
     
 }//end function fill_tabella
-
 

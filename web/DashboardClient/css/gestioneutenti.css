@@ -15,19 +15,9 @@
 	-o-transform:rotate(-70deg); /* Opera */
 	
 }
-/*
-#tab{
-	width:auto;
-	height:auto;
-}
 
 
 
-#ul{
-	padding: 1%;
-	margin-left:-14%;
-}
-*/
 .input{
 	position:relative;
 	padding:3%; 
@@ -83,6 +73,9 @@ position:relative;
 
 }
 
+#Pincopallino{
+display:none;
+}
 
 /*------------------------------------abilita.html------------------*/
 

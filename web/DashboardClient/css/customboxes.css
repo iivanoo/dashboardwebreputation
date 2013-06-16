@@ -4,12 +4,12 @@ font-family: monaco;
 color:#646464;
 }
 
+#gestione{
+display:none;
+}
 
 
 /*------------------------------dettaglio.html/box embedeed con carrot------------------------*/
-#carrot {
-	padding-left: 19px;
-}
 
 #span_carrot_plus {
 	margin-top: 20px;
@@ -18,6 +18,16 @@ color:#646464;
 #span_link_plus {
 	margin-top: 20px;
 }
+
+/*------------------------------dettaglio.html/grafici------------------------*/
+
+
+.box-content{
+padding:5%;
+}
+
+
+
 /*------------------------------------login.html---------------------------------------------*/
 #errore-pwd{
 	display:none;

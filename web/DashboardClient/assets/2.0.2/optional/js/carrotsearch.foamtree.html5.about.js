@@ -40,7 +40,7 @@
         id: "datasets",
         title: "Data sets",
         image: "tile-datasets.png",
-        description: "<em class='brand'>Carrot Search FoamTree</em> visualizes hierarchical data sets:",
+        description: "",
         type: "stateful",
         presets: 5,
         links: [
