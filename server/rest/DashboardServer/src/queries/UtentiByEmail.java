@@ -24,9 +24,11 @@ public class UtentiByEmail {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String searchUtentiByEmailJSON(@PathParam("Email") String mail) {
-		String result = "";
+		String result = new String();
 		try {
-			result = this.getUtenti(mail).toJson();
+		
+			result = getUtenti(mail).toJson();
+			
 		}
 		catch (Exception exc) {
 			result = "{\"error\":{\"text\":" + exc.getMessage() + "}}";
@@ -36,7 +38,7 @@ public class UtentiByEmail {
 	}
 
 	private Utenti getUtenti(String mail) throws Exception {
-		Utenti utenti = null;
+		Utenti utenti = new Utenti();
 		Connection conn = DbManager.getConnection();
 		Statement stmt = conn.createStatement();
 		String query = "SELECT * from Utenti WHERE Email =\""+mail+ "\";";
@@ -48,7 +50,7 @@ public class UtentiByEmail {
 		stmt.close();
 		conn.close();
 		return utenti;
-	}
+	};
 
 //________________________________________________________________________________________________________________________
 

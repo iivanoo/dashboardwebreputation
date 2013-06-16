@@ -34,54 +34,78 @@ public class LinksForTopic {
 
 	
 	private String getLinks(String topic, int idutente, String nome,int inf, int sup) throws Exception {
-		
+		int max = 0;
 		String links ="[ ";
-		List<String> sorgenti = new ArrayList<String>();
-		Connection conn_b = DbManager.getConnection();
-		Statement stmt_b = conn_b.createStatement();
-		ResultSet rset_b = stmt_b.executeQuery("SELECT DISTINCT s.Pagina AS label FROM Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND t.ID = c.IDTopic AND (s.Nome = \""+nome+"\" OR s.Pagina=\""+nome+"\")  AND s.Pagina IS NOT NULL AND s.ID = acc.IDSorgente AND acc.IDUtente = "+idutente+" UNION SELECT DISTINCT s.Nome AS label FROM Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND t.ID = c.IDTopic AND s.Nome LIKE '"+nome+"' AND s.Pagina IS NULL AND s.ID = acc.IDSorgente AND acc.IDUtente = "+idutente+";");
-		while (rset_b.next()) {
-			
-			String st_b = rset_b.getObject("label").toString();
-			sorgenti.add(st_b);
-			
-		}
-		
-		rset_b.close();
-		stmt_b.close();
-		conn_b.close();
-		
-	
+		List<String> Topics = new ArrayList<String>();
 		
 		
-for(int x=0;x<sorgenti.size();x++){
 		Connection conn = DbManager.getConnection();
 		Statement stmt = conn.createStatement();
-		ResultSet rset = stmt.executeQuery("SELECT DISTINCT p.Link AS label, p.Text AS testo FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE p.ID = c.IDPost AND c.IDTopic = t.ID AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.ID = p.ID_Fonte AND (s.Nome = \""+sorgenti.get(x)+"\" OR s.Pagina=\""+sorgenti.get(x)+"\") AND acc.IDUtente = "+idutente+" AND t.Topic='"+topic+"' LIMIT "+inf+","+sup+";");
-		links += "{\"nome\":\""+sorgenti.get(x)+"\",\"links\":[ ";
-		while (rset.next()) {
-			
-			String st = rset.getObject("label").toString();
-			String tes = rset.getObject("testo").toString();
-			if (tes.length() != 0 && tes.length()>25){tes = tes.substring(0,25)+"...";}
-			else if (tes.length() == 0){tes = st;};
-			
-			links += "{\"link\":\""+st+"\",\"testo\":\""+tes+"\"},";
-			
-		}
-		links = links.substring(0,links.length()-1);
-		links += "]},";
-		rset.close();
-		stmt.close();
-		conn.close();
-};//end for x
+		ResultSet topics_set = stmt.executeQuery("SELECT DISTINCT Topic FROM Topics AS t INNER JOIN Contenuto AS c INNER JOIN Post AS p WHERE t.ID = c.IDTopic AND c.IDPost = p.ID AND p.ID IN (SELECT p.ID FROM Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE t.ID = c.IDTopic AND c.IDPost = p.ID AND t.Topic = '"+topic+"');");
+		while(topics_set.next()){
 		
-		links = links.substring(0,links.length()-1)+"]";
+		
+		Connection conn_b = DbManager.getConnection();
+		Statement stmt_b = conn_b.createStatement();
+		ResultSet rset_b = stmt_b.executeQuery("SELECT COUNT(t.Topic) as frequenza, t.Topic FROM Topics AS t INNER JOIN Contenuto AS c INNER JOIN Post AS p INNER JOIN Sorgenti AS s INNER JOIN Accesso AS acc INNER JOIN Utenti AS u WHERE t.Topic = '"+topics_set.getObject("Topic")+"' AND u.ID = "+idutente+" AND s.Nome='"+nome+"' AND t.ID = c.IDTopic AND c.IDPost = p.ID AND p.ID_Fonte = s.ID AND s.ID = acc.IDSorgente AND acc.IDUtente = u.ID;");
+		
 	
+		while (rset_b.next()) {
+			if(Integer.parseInt(rset_b.getObject("frequenza").toString()) != 0){
+				int index = Integer.parseInt(rset_b.getObject("frequenza").toString());
+				if(index>=max){
+					max = index;
+					
+					Topics.add(0,rset_b.getObject("Topic").toString());
+					}
+				else{
+					Topics.add(rset_b.getObject("Topic").toString());
+					
+					}
+			};
+
+			
+			}
+		
+			rset_b.close();
+			stmt_b.close();
+			conn_b.close();
+		};
+	topics_set.close();
+	stmt.close();
+	conn.close();
+		
+	
+//Ricavo i link cliccabili	
+	for(int i=0; i<Topics.size();i++){
+	Connection conn_l = DbManager.getConnection();
+	Statement stmt_l = conn_l.createStatement();
+	String query = "SELECT DISTINCT p.Link, p.Text FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic ='"+Topics.get(i)+"' LIMIT "+inf+","+sup+";";
+	ResultSet rset_l = stmt_l.executeQuery(query);
+	links += "{\"nome\":\""+Topics.get(i)+"\",\"links\":[ ";
+	while(rset_l.next()){
+		String st = rset_l.getObject("Link").toString();
+		String tes = rset_l.getObject("Text").toString();
+		if (tes.length() != 0 && tes.length()>25){tes = tes.substring(0,25)+"...";}
+		else if (tes.length() == 0){tes = st;};
+		
+		links += "{\"link\":\""+st+"\",\"testo\":\""+tes+"\"},";
+		
+	};
+	links = links.substring(0,links.length()-1);
+	links += "]},";
+	rset_l.close();
+	stmt_l.close();
+	conn_l.close();
+	};
+	
+	
+	
+
+	links = links.substring(0,links.length()-1)+"]";
 		return links;
 	}
+
+	
 	
 }
-
-//restituisce i link relativi ad un topic a prescindere dalla polarità
-//TODO nel lato client inserire il controllo: se pagina NOT NULL allora l'etichetta del bobble è la pagina altrimenti è il nome della fonte, ma non ripetuto

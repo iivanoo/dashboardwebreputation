@@ -58,5 +58,5 @@ width:50%;
 	font-size:12px;
 }
 
-#errore-username, #errore-password, #errore-confirm, #errore-nome, #errore-cognome, #errore-citta, #errore-general{
+#errore-username, #errore-username-vuoto, #errore-password, #errore-confirm, #errore-nome, #errore-cognome, #errore-citta, #errore-general, #errore-data{
 display:none;}

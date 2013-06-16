@@ -25,6 +25,13 @@ public class Utenti{
 	private boolean Admin;
 	private Boolean Attivo;
 	
+	
+	
+	public Utenti(){
+		
+	}
+	
+	
 	public Utenti(int id, String nome, String cognome, String email, String password, String data, 
 			String citta, int creatore, String datains, boolean ad, boolean at){
 		this.ID = id;
