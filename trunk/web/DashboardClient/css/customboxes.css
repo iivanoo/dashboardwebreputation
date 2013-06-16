@@ -68,5 +68,6 @@ width:50%;
 	font-size:12px;
 }
 
-#errore-username, #errore-username-vuoto, #errore-password, #errore-confirm, #errore-nome, #errore-cognome, #errore-citta, #errore-general, #errore-data{
-display:none;}
+#vuoto-old, #vuoto-new, #vuoto-confirm, #errore-confirm-new, #errore-new, #errore-old, #errore-username, #errore-username-vuoto, #errore-password, #errore-confirm, #errore-nome, #errore-cognome, #errore-citta, #errore-general, #errore-data{
+display:none;
+}

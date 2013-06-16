@@ -17,18 +17,18 @@ import java.sql.*;
 
 import javax.ws.rs.PathParam;
 
-@Path("/Utenti/modificaPwd/idutente={ID}/old-pwd={OLDPwd}/new-pwd={NEWPwd}")
+@Path("/Utenti/modificaPwd/idutente={ID}/new-pwd={NEWPwd}")
 public class ModificaPassword {
 
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String modificaPassword(@PathParam("ID") int id, @PathParam("OLDPwd") String oldpwd, @PathParam("NEWPwd") String newpwd) {
+	public String modificaPassword(@PathParam("ID") int id,@PathParam("NEWPwd") String newpwd) {
 		String result = "";
 		try {
 			
-			int res = this.modifica(id,oldpwd,newpwd);
-			if (res != 0){result += "true";}else{result+="no_match";};
+			int res = this.modifica(id,newpwd);
+			result+="true";
 			
 			}
 		
@@ -43,14 +43,14 @@ public class ModificaPassword {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 
-	public int modifica(int id, String oldpwd, String newpwd) {
+	public int modifica(int id, String newpwd) {
 		int res = 0;
 		try {
 		
 			Connection conn = DbManager.getConnection();
 			Statement stmt = conn.createStatement();
 	
-			String query = "UPDATE Utenti SET Password = '"+newpwd+"' WHERE ID = "+id+" AND Password = '"+oldpwd+"';";
+			String query = "UPDATE Utenti SET Password = '"+newpwd+"' WHERE ID = "+id+";";
 			res = stmt.executeUpdate(query);
 			
 			stmt.close();
