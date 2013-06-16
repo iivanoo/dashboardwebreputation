@@ -1,4 +1,4 @@
-
+/*------------------------------------gestione_utenti.html------------------*/
 .fonti_sel{
 	
 	display:table-caption;
@@ -77,3 +77,28 @@ border-color:#DDDDDD;
 display:none;
 
 }
+
+#annulla{
+position:relative;
+
+}
+
+
+/*------------------------------------abilita.html------------------*/
+
+.div_attivo{
+
+border-width:1px;
+border-color:#DDDDDD
+}
+
+#save_abilita{
+position:relative;
+left:85.3%;
+}
+
+#annulla_abilita{
+position:relative;
+left:85.3%;
+}
+

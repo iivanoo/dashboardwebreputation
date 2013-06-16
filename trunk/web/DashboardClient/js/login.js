@@ -3,16 +3,26 @@ var e = document.getElementById("mail-div");
 var err = document.getElementById("errore-pwd");
 var err_in = document.getElementById("errore-pwd-in");
 $("#login").attr("disabled",true);
-	    
+
+eraseCookie("idutente");
+eraseCookie("fontecliccata");
+
+
 /*-----------------------------validazione------------------------------------------*/
 var val_pwd = document.getElementById("password");
+
+$(val_pwd).keypress(function(e) {
+    if(e.which == 13) {
+       $("#login").click();
+    }
+});
 
 $(val_pwd).attr("onkeyup","validazione();");
 function validazione(){
 	
 	var pattern = "['=]";
 	if(val_pwd.value.match(pattern))
-	{alert("match");}
+	{$("#login").attr("disabled",true);}
 	else{
 		$("#login").attr("disabled",false);
 	};

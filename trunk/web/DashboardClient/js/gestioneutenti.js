@@ -142,7 +142,8 @@ function fill_tabella(){
 		
 		}//end for
 		console.log("cambiamenti salvati");
-		window.location = "index.html";	
+		//TODO inserire div al posto dell'alert
+		alert("qui ci va il div di reindirizzamento");
 	}	
 
     
