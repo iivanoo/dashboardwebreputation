@@ -49,59 +49,6 @@ public class SorgentiResource {
 			throw new WebApplicationException(404);
 		}
 	}
-/*
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	// TODO this method must be tested
-	public void updateSorgente(@PathParam("id") String id, String payload) {
-		try {
-			Sorgenti sorgente = new Sorgenti(payload);
-			Connection conn = DbManager.getConnection();
-			Statement stmt = conn.createStatement();
-			String query = "UPDATE Sorgenti SET " + 
-					"Nome = '" + sorgente.getNome() + "', " +
-					"Pagina = '" + sorgente.getPagina() + "', " +
-					"Link = '" + sorgente.getLink() + "', " +
-					"Tipo = " + sorgente.getTipo() + ", " +
-					"Autore = '" + sorgente.getAutore() + "', " +
-					"Icona = '" + sorgente.getIcona() + "', " +
-					" WHERE ID = " + id + ";";
-			stmt.executeUpdate(query);
-			stmt.close();
-			conn.close();
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		}
-	}
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	// TODO this method must be tested
-	public String addSorgente(String payload) {
-		String result = "";
-		try {
-			Sorgenti sorgente = new Sorgenti(payload);
-			Connection conn = DbManager.getConnection();
-			Statement stmt = conn.createStatement();
-			String query = "INSERT INTO Sorgenti VALUES (0,'" + sorgente.getNome() + ",'" +
-					sorgente.getPagina() + "','" +
-					sorgente.getLink() + "','" +
-					sorgente.getTipo() + "','" +
-					sorgente.getAutore() + "','" +
-					sorgente.getIcona() + "','" +
-					sorgente.getIcona() + "');";
-			ResultSet rset = stmt.executeQuery(query);
-			result = new Sorgenti(rset).toJson();
-			stmt.close();
-			conn.close();
-		} catch (Exception exc) {
-			result = "{\"error\":{\"text\":" + exc.getMessage() + "}}";
-			exc.printStackTrace();
-		}
-		return result;
-	}
-*/
 	private Sorgenti getSorgente(String id) throws Exception {
 		Sorgenti sorgente = null;
 		Connection conn = DbManager.getConnection();

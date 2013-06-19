@@ -747,7 +747,7 @@ function multifill(){
 			 dati2 += "{\"nome\":\""+s[t].nome+"\",\"growth\":"+s[t].growth+",\"ultimi\":"+s[t].numeroPost[5]+",\"notification\":\""+s[t].notification+"\" },";
 			
 			 };       
-			 
+			 console.log("l'errore qui sopra? non lo so.");
 			 dati2 = dati2.substring(0,dati2.length-1);
 			 
 		        dati2 +="]}";
@@ -831,5 +831,5 @@ function switch_data(month){
 		
 }
 
-
+document.getElementById("referer").innerHTML=readCookie("fontecliccata");
 

@@ -49,7 +49,7 @@ padding:5%;
 display:none;
 }
 
-#send{
+#sending{
 margin-left: 18%;}
 
 /*-----------------------------------register.html--------------------------------------------*/
@@ -70,4 +70,120 @@ width:50%;
 
 #vuoto-old, #vuoto-new, #vuoto-confirm, #errore-confirm-new, #errore-new, #errore-old, #errore-username, #errore-username-vuoto, #errore-password, #errore-confirm, #errore-nome, #errore-cognome, #errore-citta, #errore-general, #errore-data{
 display:none;
+}
+
+
+/*---------------------------------gestione_sorgenti.html---------------------------------------------------*/
+#h2-modifica, #h2-cancellazione, #h2-aggiunta, #modify-form, #delete-form,#add-form,#errore-vuoto,#errore-vuoto-del, 
+#errore-vuoto-add,#errore-pagina-vuota, #errore-link-vuoto,#errore-tipo-vuoto
+{
+display:none;
+}
+
+
+
+.source-box {
+	width: 600px;
+	margin: 100px auto;
+	background: #fff;
+	color: #aaa;
+	overflow: hidden;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.source-box .icons {
+	text-align: right;
+	margin: 20px 15px;
+}
+
+.source-box .icons i {
+	text-align: right;
+	opacity: .2;
+	margin: 0px 5px;
+}
+
+.source-box .icons i:hover {
+	opacity: .8;
+}
+
+.source-box h2 {
+	color: #78CD51;
+	margin-left: 30px;
+	font-family: monaco;
+	font-weight: normal;
+}
+
+.source-box h3 {
+	color: #646464;
+	margin-left: 30px;
+	font-family: monaco;
+	font-weight: normal;
+}
+
+.source-box p {
+	margin: 10px 30px;
+	font-weight: normal;
+}
+
+.source-box .input-prepend {
+	background: #fff;
+	width: 100%;
+	text-align: center;
+	padding: 15px 0px;
+	border-left: 5px solid #fff;
+}
+
+.source-box .input-prepend-focus {
+	background: #fafafa;
+	width: 100%;
+	text-align: center;
+	padding: 15px 0px;
+	border-left: 5px solid #78CD51;
+}
+
+.source-box .add-on {
+	border: 1px solid #eee !important;
+	background: #fff;
+	margin-left: -10px;
+	padding: 10px;
+}
+
+.source-box .add-on i {
+	opacity: .1;
+}
+
+.source-box input[type="text"],.login-box input[type="password"] {
+	border: 1px solid #eee !important;
+	color: #aaa;
+	border-left: none !important;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	height: 42px !important;
+}
+
+.source-box .remember {
+	margin-top: 20px;
+	margin-left: 20px;
+	float: left;
+}
+
+.source-box .button-gestione {
+	position: relative;
+	margin-top: 20px;
+	left: -30%;
+	float:right;
+}
+
+.button-custom{
+	position: relative;
+	margin-top: 20px;
+	padding-bottom: 30px;
+	left: -10%;
+	float:right;
 }
