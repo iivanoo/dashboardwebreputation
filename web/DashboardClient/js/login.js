@@ -11,11 +11,16 @@ eraseCookie("fontecliccata");
 /*-----------------------------validazione------------------------------------------*/
 var val_pwd = document.getElementById("password");
 
-$(val_pwd).keypress(function(e) {
+
+//TODO perchè da problemi nell'enter in #mail-to-users
+$("#password").keypress(function(e) {
     if(e.which == 13) {
        $("#login").click();
     }
 });
+
+
+
 
 $(val_pwd).attr("onkeyup","validazione();");
 function validazione(){

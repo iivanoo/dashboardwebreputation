@@ -24,7 +24,7 @@ public class AggiungiUtente {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String searchUtentiByIdJSON(@PathParam("Nome") String nome, @PathParam("Cognome") String cognome, @PathParam("Email") String email, @PathParam("Pwd") String pwd, @PathParam("DataN") String dataN, @PathParam("Citta") String citta, @PathParam("Cda") int cda, @PathParam("DataI") String dataI, @PathParam("Admin") boolean admin, @PathParam("Attivo") boolean attivo) {
+	public String aggiungiUtente(@PathParam("Nome") String nome, @PathParam("Cognome") String cognome, @PathParam("Email") String email, @PathParam("Pwd") String pwd, @PathParam("DataN") String dataN, @PathParam("Citta") String citta, @PathParam("Cda") int cda, @PathParam("DataI") String dataI, @PathParam("Admin") boolean admin, @PathParam("Attivo") boolean attivo) {
 		String result = "";
 		try {
 			result = this.addUtente(nome, cognome, email, pwd ,dataN, citta, cda, dataI, admin, attivo);
