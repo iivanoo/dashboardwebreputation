@@ -79,19 +79,13 @@ display:none;
 
 /*------------------------------------abilita.html------------------*/
 
-.div_attivo{
-
-border-width:1px;
-border-color:#DDDDDD
+#button_abilita{
+	position: relative;
+	margin-top: 20px;
+	
+	float:right;
 }
 
-#save_abilita{
-position:relative;
-left:85.3%;
+#ok_abilita{
+	display:none;
 }
-
-#annulla_abilita{
-position:relative;
-left:85.3%;
-}
-

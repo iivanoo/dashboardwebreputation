@@ -51,7 +51,7 @@ public class AggiungiUtente {
 		
 			Connection conn = DbManager.getConnection();
 			Statement stmt = conn.createStatement();
-			String query = "INSERT INTO Utenti (ID, Nome, Cognome, Email, Password, Data_nascita, Citta, Creato_da, Data_ins, Admin, Attivo) VALUES (0, '"+utenti.getNome()+"', '"+utenti.getCognome()+"', '"+utenti.getEmail()+"', '"+utenti.getPassword()+"', '"+utenti.getData_nascita()+"', '"+utenti.getCitta()+"', "+utenti.getCreato_da()+", '"+utenti.getData_ins()+"', "+utenti.getAdmin()+", "+utenti.getAttivo()+");";
+			String query = "INSERT INTO Utenti (ID, Nome, Cognome, Email, Password, Data_nascita, Citta, Creato_da, Data_ins, Admin, Attivo) VALUES (0, '"+utenti.getNome()+"', '"+utenti.getCognome()+"', '"+utenti.getEmail()+"', '"+utenti.getPassword()+"', '"+dataN+"', '"+utenti.getCitta()+"', "+utenti.getCreato_da()+", '"+dataI+"', "+utenti.getAdmin()+", "+utenti.getAttivo()+");";
 			stmt.executeUpdate(query);
 			
 			stmt.close();

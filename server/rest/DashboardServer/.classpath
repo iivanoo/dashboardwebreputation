@@ -27,5 +27,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsr311-api-1.1.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.20-bin.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.json.jar"/>
+	<classpathentry kind="lib" path="/Users/h4rm0n/Downloads/javax.mail.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

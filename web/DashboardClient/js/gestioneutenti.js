@@ -11,6 +11,14 @@ $("#no").click(function(){
 	$("#fonti_tab").css("display","inline");
 });
 
+if(readCookie("ad") == "1"){
+	$("#g_utenti").css("display","none");
+	$("#g_sorgenti").css("display","none");
+
+}else{
+	$("#g_utenti").css("display","inline");
+	$("#g_sorgenti").css("display","inline");
+};
 
 
 

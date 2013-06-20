@@ -4,11 +4,13 @@ font-family: monaco;
 color:#646464;
 }
 
-#gestione{
+#g_utenti{
 display:none;
 }
 
-
+#g_sorgenti{
+	display:none;
+}
 /*------------------------------dettaglio.html/box embedeed con carrot------------------------*/
 
 #span_carrot_plus {
@@ -178,6 +180,7 @@ display:none;
 	margin-top: 20px;
 	left: -30%;
 	float:right;
+	margin-bottom: 20px;
 }
 
 .button-custom{

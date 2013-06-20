@@ -6,6 +6,7 @@ $("#login").attr("disabled",true);
 
 eraseCookie("idutente");
 eraseCookie("fontecliccata");
+eraseCookie("ad");
 
 
 /*-----------------------------validazione------------------------------------------*/
@@ -41,19 +42,32 @@ $("#login").click(function(){
 	var username = document.getElementById("username").value;
 	var pwd = hex_md5(document.getElementById("password").value);
 	var url = "http://localhost:8080/DashboardServer/api/Accesso/login/email="+username+"/pwd="+pwd;
+	alert(pwd);
 	$.get(url,function(log){
 		if(log == true){
+			
 			 $(err).css("display","none");
 			 $(err_in).css("display","none");
 			 $(e).css("border-color","white");
 			 $(p).css("border-color","white");
 			$.get("http://localhost:8080/DashboardServer/api/Utenti/email/email="+username,function(utente){
 				if(remember){createCookie("idutente",utente.ID,100);}else{createCookie("idutente",utente.ID,0.5);};
-				if(utente.Admin){$("#gestione").css("display","inline");}else{$("#gestione").css("display","none");};
+				if(utente.Admin == "true"){
+					
+					createCookie("ad","1");
+					
+			
+				}
+					else{
+						createCookie("ad","0");
+						
+				};
 			$.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente="+utente.ID,function(accesso){
 				if(accesso[0].length == 0){
 					eraseCookie("fontecliccata");
 					eraseCookie("idutente");
+					eraseCookie("ad")
+					
 					$(err).val("Non disponi dei permessi necessari all'accesso!");
 					 $(err).css("display","inline");
 					}
@@ -82,6 +96,8 @@ $("#login").click(function(){
 $("#logout").click(function(){
 	eraseCookie("idutente");
 	eraseCookie("fontecliccata");
+	eraseCookie("ad");
+
 	});
 
 
