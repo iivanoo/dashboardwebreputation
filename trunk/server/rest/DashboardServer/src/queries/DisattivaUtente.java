@@ -17,17 +17,17 @@ import java.sql.*;
 
 import javax.ws.rs.PathParam;
 
-@Path("/Utenti/disattiva/email={Email}")
+@Path("/Utenti/attivazione/action={Action}/email={Email}")
 public class DisattivaUtente {
 
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String disattiva(@PathParam("Email") String email, @PathParam("IDFonte") int fonte) {
+	public String disattiva(@PathParam("Action") String action, @PathParam("Email") String email) {
 		String result = "";
 		try {
 			
-			this.disattivazione(email,fonte);
+			this.disattivazione(action, email);
 			result += "true";
 			}
 		
@@ -42,13 +42,20 @@ public class DisattivaUtente {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	// TODO this method must be tested
-	public void disattivazione(String email, int fonte) {
+	public void disattivazione(String action, String email) {
 		try {
 			System.out.println("entrata");
 			
 			Connection conn = DbManager.getConnection();
 			Statement stmt = conn.createStatement();
-			String query = "UPDATE Utenti SET Attivo = 0 WHERE Email = '"+email+"';";
+			
+			String query ="";
+			if(action.equals("attiva")){query = "UPDATE Utenti SET Attivo = 1 WHERE Email = '"+email+"';";}
+			else if(action.equals("disattiva")){query = "UPDATE Utenti SET Attivo = 0 WHERE Email = '"+email+"';";}
+			else{query = "SELECT * FROM Utenti";};
+
+			
+			
 			stmt.executeUpdate(query);
 			stmt.close();
 			conn.close();
