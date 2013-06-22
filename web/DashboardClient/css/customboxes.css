@@ -190,3 +190,15 @@ display:none;
 	left: -10%;
 	float:right;
 }
+
+#tabella_edit{
+	display: none;
+}
+
+.button-edit{
+		position: relative;
+	margin-top: 20px;
+	padding-bottom: 30px;
+	left: 5%;
+	float:right;
+}

@@ -9,9 +9,12 @@ if(readCookie("ad") == "0"){
 	$("#g_utenti").css("display","none");
 	$("#g_sorgenti").css("display","none");
 
+
+
 }else{
 	$("#g_utenti").css("display","inline");
 	$("#g_sorgenti").css("display","inline");
+
 };
 
 $(document).ready(function(){
@@ -839,6 +842,3 @@ function switch_data(month){
 	return mese;
 		
 }
-
-
-
