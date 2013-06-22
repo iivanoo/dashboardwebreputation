@@ -1,4 +1,10 @@
 var dati;
+$("#addutente").click(function(){
+	$("#fonti_tab").css("display","none");
+	$("#addutente").css("display","none");
+	$("#reg_tab").css("display","inline");
+});
+
 
 var ut = readCookie("idutente");
 if(readCookie("ad") == "0"){
@@ -59,6 +65,7 @@ function fill(){
 			    var html = template(dati);
 			    document.getElementById("ulbo").innerHTML = html;
 		}//end for
+
 	});//end get
 	
 	
@@ -173,7 +180,7 @@ function fill_tabella(){
 		for(var i=0; i<item.length; i++){  
 			
 			var email = item[i].id.split("$")[0];
-			
+			console.log(email);
 			if(item[i].checked==true){
 			var fonte = item[i].id.split("$")[1];
 			
@@ -181,7 +188,7 @@ function fill_tabella(){
 				
 				var url="http://localhost:8080/DashboardServer/api/admin/action=add/email="+email;
 				$.get(url);
-				console.log();
+				console.log(url);
 			}else
 			{
 				var email = item[i].id.split("$")[0];
