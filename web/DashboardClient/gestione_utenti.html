@@ -20,7 +20,6 @@
 <link id="base-style" href="css/style.css" rel="stylesheet">
 <link id="base-style-responsive" href="css/style-responsive.css"
 	rel="stylesheet">
-<link id="bootstrap-style" href="css/customboxes.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/2.0.2/optional/css/common.css" />
 <link rel="stylesheet" href="assets/2.0.2/optional/css/layout.css" />
 <link rel="stylesheet" href="css/gestioneutenti.css" />
@@ -132,7 +131,7 @@
 								<i class="icon-signal"></i><span class="break"></span>Gestione Utenti
 							</h2>
 							 <div class="box-icon">
-						<a href="register.html" id="addutente" class="btn-settings"><i class="icon-plus"></i> Aggiungi utente </a>
+						<a href="#" id="addutente" class="btn-settings"><i class="icon-plus"></i> Aggiungi utente </a>
 						
 							</div> 
 						</div>
@@ -161,17 +160,17 @@
 						 	<table id="tabella_permessi" class="table" style="width:100%">
 							<tr>
 								<th style="width:30%"> Utente</th>
-								<th>Permessi d'accesso</th>
+								<th>Permessi di accesso alle fonti</th>
 							</tr>
 							{{#each selezione}}
 								<tr>
 									<td>{{this.utente}}<br><br>
-									<input id="{{this.utente}}"type="checkbox" class="att" style="margin-top:-1%;">&nbsp&nbsp&nbspAttivo?</input>
+									<input id="{{this.utente}}"type="checkbox" class="att" style="margin-top:-1%;">&nbsp&nbsp&nbspAttivo</input>
 									<br>
 								</td>
 								<td>
 									<div class="div_fonte">
-										<input class="input" type="checkbox" id="{{this.utente}}$admin"/>
+										<input class="input pagina" type="checkbox" id="{{this.utente}}$admin" style="left:10%" />
 										<span class="elem_fonte">Admin</span>
 									</div>
 									{{#each fonti}}
@@ -187,15 +186,177 @@
 
 							</table>
 
-
-						<button type="button" id="save" class="btn">Salva Modifiche</button>
-						<button type="button" id="annulla" class="btn" >Annulla Modifiche</button>
+						<div class="btn-group button-reg-user">
+						<button type="button" id="save" class="btn btn-primary" style="left:-12%;">Salva Modifiche</button>
+						<button type="button" id="annulla" class="btn btn-primary" >Annulla Modifiche</button>
+						</div>
 						</script> 
 				
-					</div> <!-- end class= box spanfull -->
+					</div> 
 
+
+<!-- ---------------------Registrazione di un nuovo utente--------------------------------------- -->
+					<div id="reg_tab">
 					
+						<table id="table-register" class="table">
+							<tr><th>Inserisci i dati dell'utente</th><th></th></tr>
+							<tr>
+								<th>
+									Nome<br>
+								
 
+								</th>
+								<th class="th-reg">
+									<i class="icon-user"></i> <input id="nome-reg" class= "input-reg" type="text" placeholder="Nome"/><br>	<div id="errore-nome">Errore: il nome non può contenere numeri e/o simboli!</div>
+								</th>
+							</tr>
+
+							<tr>
+								<th>
+									Cognome<br>
+									
+								</th>
+								<th class="th-reg">
+									<i class="icon-user"></i> <input id="cognome-reg" class= "input-reg" type="text" placeholder="Cognome"/><div id="errore-cognome">Errore: il cognome non può contenere numeri e/o simboli!</div>
+								</th>
+							</tr>
+
+							<tr>
+								<th>
+									Password<br>
+									<div id="errore-password">
+									NOTA: la password deve:
+										<ul>
+										<li>contenere almeno un numero;</li>
+										<li>avere una lunghezza compresa tra 6 e 12 caratteri;</li>
+										</ul>
+									</div>
+								</th>
+								<th class="th-reg">
+									<i class="icon-lock"></i> <input id="password-reg" class= "input-reg" type="password" placeholder="Inserisci password"/>
+								</th>
+							</tr>
+
+							<tr>
+								<th>
+									Ripeti password<br>
+									
+								</th>
+								<th class="th-reg">
+									<i class="icon-lock"></i> <input id="confirm-password-reg" class= "input-reg" type="password" placeholder="Ripeti la Password"/><div id="errore-confirm">Errore: la password inserita non corrisponde alla precedente!</div>
+								</th>
+							</tr>
+
+							<tr>
+								<th>
+									Email<br>
+									
+								</th>
+								<th class="th-reg">
+									<i class="icon-envelope"></i> <input id="username-reg" class= "input-reg" type="text" placeholder="Email"/><div id="errore-username">Errore: controlla il formato dell'email!</div>
+									<div id="errore-username-vuoto">Inserisci l'email dell'utente!</div>
+								</th>
+							</tr>
+
+							<tr>
+								<th>
+									Data di nascita<br>
+									
+								</th>
+								<th class="th-reg">
+									<i class="icon-calendar" style="float:left;float:bottom"></i>
+									<select id="giorno" name="Giorno" style="float:left;width:28%">
+										<option value="" selected>Giorno</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+										<option value="9">9</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+										<option value="24">24</option>
+										<option value="25">25</option>
+										<option value="26">26</option>
+										<option value="27">27</option>
+										<option value="28">28</option>
+										<option value="29">29</option>
+										<option value="30">30</option>
+										<option value="31">31</option>
+									</select>
+									<select id="mese" name="Mese" style="float:left;width:28%;margin-left:3.3%;">
+										<option value="" selected>Mese</option>
+										<option value="01">Gennaio</option>
+										<option value="02">Febbraio</option>
+										<option value="03">Marzo</option>
+										<option value="04">Aprile</option>
+										<option value="05">Maggio</option>
+										<option value="06">Giugno</option>
+										<option value="07">Luglio</option>
+										<option value="08">Agosto</option>
+										<option value="09">Settembre</option>
+										<option value="10">Ottobre</option>
+										<option value="11">Novembre</option>
+										<option value="12">Dicembre</option>
+									</select>
+									<input id="anno" style="float:left;width:28%;margin-left:3.3%;" type="text" placeholder="Anno (AAAA)"/><div id="errore-data">Inserisci la data di nascita dell'utente!</div>
+
+								</th>
+							</tr>
+
+							<tr>
+								<th>
+									Citt&agrave<br>
+									
+								</th>
+								<th class="th-reg">
+									<i class="icon-map-marker"></i> <input id="citta" class= "input-reg" type="text" placeholder="Citt&agrave"/><div id="errore-citta">Errore: la città non può contenere simboli e/o numeri!</div>
+								</th>
+							</tr>
+
+							<tr>
+								<th>
+									Ha i permessi da amministratore?<br>
+								</th>
+								<th class="th-reg"><input id="admin-reg" type="checkbox"/></th>
+							</tr>
+
+							<tr>
+								<th>
+									L'utente è abilitato?<br>
+								</th>
+								<th class="th-reg"><input id="attivo-reg" type="checkbox"/></th>
+							</tr>
+
+						</table>
+					
+						<div id="errore-general">Errore: la città non può contenere simboli e/o numeri!</div>
+							<div id="btn-g" class="btn-group button-reg-user">
+								<button id="back" type="button" class="btn btn-primary">
+								<i class="icon-arrow-left icon-white"></i> Indietro</button>
+								<button id="reset" type="button" class="btn btn-primary">
+								<i class="icon-remove icon-white"></i> Pulisci tutti i campi</button>
+								<button id="register" type="button" class="btn btn-primary" disabled>
+								<i class="icon-ok icon-white"></i> Conferma</button>
+							</div>
+							<div class="clearfix"></div>
+					
+					</div>
 
 
 				<div class="clearfix"></div>
@@ -244,9 +405,10 @@
 			<script src="js/jquery.masonry.min.js"></script>
 
 			<script src="js/custom.js"></script>
+			<script src="js/md5.js"></script>
             <script src="js/cookies.js"></script>
              <script src="js/gestioneutenti.js"></script>
-                  
+             <script src="js/register.js"></script>
      
     
           

@@ -1,16 +1,6 @@
 /*------------------------------gestioneutenti.html------------------------*/
-#addutente{
-font-family: monaco;
-color:#646464;
-}
 
-#g_utenti{
-display:none;
-}
-
-#g_sorgenti{
-	display:none;
-}
+#vuoto-old, #vuoto-new, #vuoto-confirm, #errore-confirm-new, #errore-new, #errore-old{display:none;}
 /*------------------------------dettaglio.html/box embedeed con carrot------------------------*/
 
 #span_carrot_plus {
@@ -53,26 +43,6 @@ display:none;
 
 #sending{
 margin-left: 18%;}
-
-/*-----------------------------------register.html--------------------------------------------*/
-#register-box{
-width:50%;
-}
-
-
-.errore{
-	color:#706d73;
-	text-align:left;
-	padding-left:4.5%;
-	background: -webkit-gradient(linear, right top, left bottom, from(#ff8182), to(white));
-	background: -moz-linear-gradient(100% 100% 180deg, #ff8182, white);
-	font-family:monaco;
-	font-size:12px;
-}
-
-#vuoto-old, #vuoto-new, #vuoto-confirm, #errore-confirm-new, #errore-new, #errore-old, #errore-username, #errore-username-vuoto, #errore-password, #errore-confirm, #errore-nome, #errore-cognome, #errore-citta, #errore-general, #errore-data{
-display:none;
-}
 
 
 /*---------------------------------gestione_sorgenti.html---------------------------------------------------*/

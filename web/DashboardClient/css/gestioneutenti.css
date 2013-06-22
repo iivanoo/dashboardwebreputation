@@ -1,4 +1,19 @@
 /*------------------------------------gestione_utenti.html------------------*/
+#addutente{
+font-family: monaco;
+color:#646464;
+}
+
+#g_utenti{
+display:none;
+}
+
+#g_sorgenti{
+	display:none;
+}
+
+
+
 .fonti_sel{
 	
 	display:table-caption;
@@ -77,15 +92,45 @@ position:relative;
 display:none;
 }
 
-/*------------------------------------abilita.html------------------*/
 
-#button_abilita{
-	position: relative;
-	margin-top: 20px;
-	
+.input-reg{
+	width:90%;
+}
+
+.button-reg-user{
 	float:right;
 }
 
-#ok_abilita{
-	display:none;
+
+#register-box{
+width:50%;
+}
+
+
+.errore{
+	color:#706d73;
+	text-align:left;
+	padding-left:4.5%;
+	font-family:monaco;
+	font-size:12px;
+}
+
+
+#errore-username, #errore-username-vuoto, #errore-confirm, #errore-nome, #errore-cognome, #errore-citta, #errore-general, #errore-data{
+display: none;
+background:-webkit-gradient(linear, right top, left bottom, from(white), to(#ff8182));
+}
+
+#errore-password{
+background:-webkit-gradient(linear, right top, left bottom, from(white), to(#feed76));
+}
+
+
+
+#reg_tab{
+	display: none;
+}
+
+.th-reg{
+	width:70%;
 }
