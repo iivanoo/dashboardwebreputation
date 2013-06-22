@@ -1553,7 +1553,8 @@ div.uploader {
 #typeahead{
 	position:relative;
 	width:80%;
-	right:12.5%;
+	right:15%;
+	z-index: -1;
 }
 button{
 	position:relative;

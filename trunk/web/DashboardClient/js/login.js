@@ -42,7 +42,7 @@ $("#login").click(function(){
 	var username = document.getElementById("username").value;
 	var pwd = hex_md5(document.getElementById("password").value);
 	var url = "http://localhost:8080/DashboardServer/api/Accesso/login/email="+username+"/pwd="+pwd;
-	alert(pwd);
+	
 	$.get(url,function(log){
 		if(log == true){
 			
@@ -62,8 +62,9 @@ $("#login").click(function(){
 						createCookie("ad","0");
 						
 				};
-			$.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente="+utente.ID,function(accesso){
-				if(accesso[0].length == 0){
+			$.get("http://localhost:8080/DashboardServer/api/Utenti/id/id="+utente.ID,function(accesso){
+				
+				if(accesso.Attivo == 0){
 					eraseCookie("fontecliccata");
 					eraseCookie("idutente");
 					eraseCookie("ad")

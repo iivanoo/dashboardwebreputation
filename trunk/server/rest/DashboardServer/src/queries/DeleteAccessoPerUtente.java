@@ -1,3 +1,6 @@
+
+//TODO file da cancellare
+
 package queries;
 
 
@@ -17,17 +20,17 @@ import java.sql.*;
 
 import javax.ws.rs.PathParam;
 
-@Path("/Accesso/mod/del/utente={Email}/nomefonte={NomeFonte}/pagina={Pagina}")
+@Path("/Accesso/mod/del/utente={Email}/nomefonte={NomeFonte}")
 public class DeleteAccessoPerUtente {
 
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String AddAccessoJSON(@PathParam("Email") String utente, @PathParam("NomeFonte") String fonte, @PathParam("Pagina") String pagina) {
+	public String AddAccessoJSON(@PathParam("Email") String utente, @PathParam("NomeFonte") String fonte) {
 		String result = "";
 		try {
 			
-			this.setAccesso(utente,fonte, pagina);
+			this.setAccesso(utente,fonte);
 			result += "true";
 			}
 		
@@ -41,8 +44,7 @@ public class DeleteAccessoPerUtente {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	// TODO this method must be tested
-	public void setAccesso(String utente, String fonte, String pagina) {
+	public void setAccesso(String utente, String fonte) {
 		try {
 			int id = 0;
 		
@@ -61,15 +63,7 @@ public class DeleteAccessoPerUtente {
 			int idfonte=0;
 			Connection conn_fonte = DbManager.getConnection();
 			Statement stmt_fonte = conn_fonte.createStatement();
-			if(pagina.equals("null") || pagina.equals("public")){
-				sql = "SELECT ID FROM Sorgenti WHERE Nome = '"+fonte+"'";
-
-			}
-			else{
-				 sql = "SELECT ID FROM Sorgenti WHERE Nome = '"+fonte+"' AND Pagina ='"+pagina+"'";
-
-			};
-			System.out.println(sql);
+			sql = "SELECT ID FROM Sorgenti WHERE Nome = '"+fonte+"'";
 			ResultSet rset = stmt_fonte.executeQuery(sql);
 			while(rset.next()){
 			idfonte = Integer.parseInt(rset.getObject("ID").toString());

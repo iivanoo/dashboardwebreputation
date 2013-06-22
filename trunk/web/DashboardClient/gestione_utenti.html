@@ -47,10 +47,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span> </a> <a class="brand" href="index.html"> <img
-					alt="Optimus Dashboard" src="img/logo20.png" /> <span>Dipartimento
-						Protezione Civile</span>
-				</a>
+					class="icon-bar"></span> </a> 
 
 				<!-- start: Header Menu -->
 				<div class="btn-group pull-right">
@@ -136,10 +133,7 @@
 							</h2>
 							 <div class="box-icon">
 						<a href="register.html" id="addutente" class="btn-settings"><i class="icon-plus"></i> Aggiungi utente </a>
-						<a href="abilita.html" id="addutente" class="btn-settings"><i class="icon-ok"></i><i class="icon-remove"></i> Abilita/Disabilita Utente </a>
-							<!--	<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i>
-								</a> <a href="#" class="btn-close"><i class="icon-remove"></i>
-								</a>-->
+						
 							</div> 
 						</div>
 						
@@ -164,29 +158,27 @@
 						 <script id="el_sorg" type="text/x-handlebars-template">
 						
 							
-						 	<table id="tabella_permessi" class="table table-bordered" style="width:100%">
+						 	<table id="tabella_permessi" class="table" style="width:100%">
 							<tr>
 								<th style="width:30%"> Utente</th>
 								<th>Permessi d'accesso</th>
 							</tr>
 							{{#each selezione}}
 								<tr>
-								<td>{{this.utente}}</td>
+									<td>{{this.utente}}<br><br>
+									<input id="{{this.utente}}"type="checkbox" class="att" style="margin-top:-1%;">&nbsp&nbsp&nbspAttivo?</input>
+									<br>
+								</td>
 								<td>
 									<div class="div_fonte">
-									<input class="input" type="checkbox" id="{{this.utente}}$admin"/>
-									<span class="elem_fonte">Admin</span>
+										<input class="input" type="checkbox" id="{{this.utente}}$admin"/>
+										<span class="elem_fonte">Admin</span>
 									</div>
 									{{#each fonti}}
 									<div class="{{../this.utente}}&{{this.nome}}$ div_fonte">
-										<i  id="{{../this.utente}}-h-{{this.nome}}" class="{{../this.utente}}&{{this.nome}}$ icon-chevron-down"></i>
-										
-										 <span class="elem_fonte">{{this.nome}}
-										
-											<div id="{{../this.utente}}-k-{{this.nome}}" class="pagine_nascoste">{{#each pagine}}<br><input class="input pagina" type="checkbox" id="{{../../this.utente}}${{../this.nome}}${{pagina}}" {{checked}}/><span class="div_fonte div_pagina">{{pagina}}</span>{{/each}}</div><br>
-										
-										</span>
-									
+
+										<input style="left:10%" class="input pagina" type="checkbox" id="{{../this.utente}}${{this.nome}}" {{checked}}/>
+										<span class="elem_fonte">{{this.nome}}</span>
 									</div>
 									{{/each}}
 								</td>
@@ -255,7 +247,7 @@
             <script src="js/cookies.js"></script>
              <script src="js/gestioneutenti.js"></script>
                   
-          <script src="js/sorgenti.js"></script>
+     
     
           
 

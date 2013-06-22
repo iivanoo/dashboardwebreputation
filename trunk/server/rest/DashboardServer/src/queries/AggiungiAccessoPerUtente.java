@@ -17,17 +17,17 @@ import java.sql.*;
 
 import javax.ws.rs.PathParam;
 
-@Path("/Accesso/mod/add/utente={Email}/nomefonte={NomeFonte}/pagina={Pagina}")
+@Path("/Accesso/mod/action={Action}/utente={Email}/nomefonte={NomeFonte}")
 public class AggiungiAccessoPerUtente {
 
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String AddAccessoJSON(@PathParam("Email") String utente, @PathParam("NomeFonte") String fonte, @PathParam("Pagina") String pagina) {
+	public String AddAccessoJSON(@PathParam("Action") String action,@PathParam("Email") String utente, @PathParam("NomeFonte") String fonte) {
 		String result = "";
 		try {
 			
-			this.setAccesso(utente,fonte, pagina);
+			this.setAccesso(action,utente,fonte);
 			result += "true";
 			}
 		
@@ -41,8 +41,7 @@ public class AggiungiAccessoPerUtente {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	// TODO this method must be tested
-	public void setAccesso(String utente, String fonte, String pagina) {
+	public void setAccesso(String action,String utente, String fonte) {
 		try {
 
 			int id = 0;
@@ -63,18 +62,7 @@ public class AggiungiAccessoPerUtente {
 			Connection conn_fonte = DbManager.getConnection();
 			Statement stmt_fonte = conn_fonte.createStatement();
 			
-			if(pagina.equals("null")){
-				sql = "SELECT ID FROM Sorgenti WHERE Nome = '"+fonte+"'";
-
-			}
-			else if(pagina.equals("public")){
-				sql = "SELECT ID FROM Sorgenti WHERE Nome = '"+fonte+"' AND Pagina IS NULL";
-
-			}
-			else{
-				 sql = "SELECT ID FROM Sorgenti WHERE Nome = '"+fonte+"' AND Pagina ='"+pagina+"'";
-
-			};
+			sql = "SELECT ID FROM Sorgenti WHERE Nome = '"+fonte+"'";
 			
 			ResultSet rset = stmt_fonte.executeQuery(sql);
 			while(rset.next()){
@@ -82,7 +70,17 @@ public class AggiungiAccessoPerUtente {
 			
 			Connection conn = DbManager.getConnection();
 			Statement stmt = conn.createStatement();
-			String query = "INSERT IGNORE Accesso(IDUtente,IdSorgente) VALUES ("+id+","+idfonte+") ;";
+			String query;
+			
+			if(action.equals("add")){
+				query= "INSERT IGNORE Accesso(IDUtente,IdSorgente) VALUES ("+id+","+idfonte+") ;";
+				}else if(action.equals("del"))
+				{
+					query = "DELETE IGNORE FROM Accesso WHERE IDUtente="+id+" AND IDSorgente="+idfonte+";";
+				}
+				else{query="SELECT * FROM Accesso;";};
+			
+			
 			stmt.executeUpdate(query);
 			
 			stmt.close();

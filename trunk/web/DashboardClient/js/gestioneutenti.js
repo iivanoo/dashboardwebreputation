@@ -1,10 +1,70 @@
 var dati;
-var ex;
+
+var ut = readCookie("idutente");
+if(readCookie("ad") == "0"){
+
+	$("#g_utenti").css("display","none");
+	$("#g_sorgenti").css("display","none");
+
+}else{
+	$("#g_utenti").css("display","inline");
+	$("#g_sorgenti").css("display","inline");
+};
+
 $(document).ready(function(){
-    fill();
-    fill_tabella();
-    
-});    // end ready function 
+	fill_tabella();
+	
+	if(ut==null){window.location = "login.html";}
+	else{
+		
+		
+	    $.get("http://localhost:8080/DashboardServer/api/Utenti/id/id="+ut,function(dati){
+	    	var dati = {utente : dati.Email};
+	    	var struttura = document.getElementById("utente-template").innerHTML;
+		    var template = Handlebars.compile(struttura);
+		    var html = template(dati);
+		    document.getElementById("etichetta-utente").innerHTML = html;
+			});
+		
+
+		
+	fill();
+	};//end else
+	}); //end ready index
+
+
+      
+
+function fill(){
+
+	//var nomi= new Array();
+	$.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente="+ut, function(data) {
+		
+		
+		for(var i=0; i<data.length; i++){
+			
+		
+			 var fonti="";
+			 for(var i=0; i<data.length;i++){fonti += "\""+data[i]+"\",";};
+			 fonti = fonti.substring(0,fonti.length-1);
+		
+			 	var str = "{\"fontifill\" : ["+fonti+"]}";
+			 
+		
+			 	
+			 	dati = $.parseJSON(str); 
+			 
+			    var struttura = document.getElementById("el_fonti").innerHTML;
+			    var template = Handlebars.compile(struttura);
+			    var html = template(dati);
+			    document.getElementById("ulbo").innerHTML = html;
+		}//end for
+	});//end get
+	
+	
+}
+
+
 
 $("#no").click(function(){
 	$("#Pincopallino").css("display","none");
@@ -35,53 +95,27 @@ function fill_tabella(){
 	    
 	    var template = Handlebars.compile(struttura);
 	    var html = template(dati);
+
+	    $.get("http://localhost:8080/DashboardServer/api/Utenti",function(utenti_att){
+	    	for(var x=0;x<utenti_att.length;x++){
+
+	    		if(utenti_att[x].Attivo == "true"){document.getElementById(utenti_att[x].Email).checked = true;};
+	    	};
+	    });
+
 	    document.getElementById("fonti_tab").innerHTML = html;
 	    $("#ok").click(function(){
 	        salva_modifiche();
 	        });// end click save
-
-	      $(".icon-chevron-down").click(function(){
-	        	$(this).toggleClass("icon-chevron-down");
-	        	$(this).toggleClass("icon-chevron-up");
-	        	
-	        	var point = $(this).attr("id");
-	        	
-	        	//$(document.getElementById(point)).slideToggle("slow");
-	        	var point2 =point.split('-h-')[0]+'-k-'+point.split('-h-')[1];
-	        	var str = $(document.getElementById(point)).html();
-	        	
-	        	
-	        	$(document.getElementById(point2)).slideToggle("slow");
-	        	
-	        }); //end click chevron_down
 
 	      
 	      $("#tabella_permessi").ready(function(){
 	      	
 	      	var arr = new Array(dati);
 	      	
-	      	var ex = "#"+arr[0].selezione[0].utente+"$"+arr[0].selezione[0].fonti[0].nome+"$"+arr[0].selezione[0].fonti[0].pagine[0].pagina;
+	      	var ex = "#"+arr[0].selezione[0].utente+"$"+arr[0].selezione[0].fonti[0].nome;
 	      	
 	      	try{
-	      		ex ='i#'+arr[0].selezione[0].utente+'-h-'+arr[0].selezione[0].fonti[0].nome;
-	      		
-	      		for (var i=0; i<arr.length;i++){
-	      			for(var k=0; k<arr[i].selezione.length;k++){
-	      				for (var j=0; j<arr[i].selezione[k].fonti.length;j++){
-	      					for(var x=0; x<arr[i].selezione[k].fonti[j].pagine.length;x++){
-	      						if(arr[i].selezione[k].fonti[j].pagine[x].pagina){
-	      							ex ='i#'+arr[0].selezione[0].utente+'-h-'+arr[0].selezione[0].fonti[0].nome;
-	      							$(ex).css("display","inline");
-	      						};
-	      					}//end for x
-	      				}//end for j
-	      			}//end for k
-	      		}//end for i
-	      		
-	      		
-	      		
-	      		
-	      		if(arr[0].selezione[0].fonti[0].pagine[0].pagina){$(ex).css("display","inline");};
 	      		
 	      		$.get("http://localhost:8080/DashboardServer/api/admin",function(bool){
 	      			var json = $.parseJSON(bool);
@@ -124,9 +158,20 @@ function fill_tabella(){
 	}
 
 	function salva_modifiche(){
-	
-		var item = document.getElementsByTagName("input");
-		for(var i=0; i<item.length; i++){  //parte da 1 xke item[0] coincide con l'input id=typehead
+		var attivi = $(".att");
+		for(var k=0;k<attivi.length;k++){
+			if(attivi[k].checked){
+				$.get("http://localhost:8080/DashboardServer/api/Utenti/attivazione/action=attiva/email="+attivi[k].id);
+			}else{
+				$.get("http://localhost:8080/DashboardServer/api/Utenti/attivazione/action=disattiva/email="+attivi[k].id);
+			};
+		};
+
+
+		var item = $("input.pagina");
+
+		for(var i=0; i<item.length; i++){  
+			
 			var email = item[i].id.split("$")[0];
 			
 			if(item[i].checked==true){
@@ -137,13 +182,11 @@ function fill_tabella(){
 				var url="http://localhost:8080/DashboardServer/api/admin/action=add/email="+email;
 				$.get(url);
 				console.log();
-			}else{var pagina;
-
-			if(item[i].id.split("$")[2] == "Pagina pubblica"){pagina="public";}
-			else if(item[i].id.split("$")[2] == ""){pagina="null";}
-			else{ pagina = item[i].id.split("$")[2];};
-			
-			$.get("http://localhost:8080/DashboardServer/api/Accesso/mod/add/utente="+email+"/nomefonte="+fonte+"/pagina="+pagina);
+			}else
+			{
+				var email = item[i].id.split("$")[0];
+				var fonte = item[i].id.split("$")[1];
+				$.get("http://localhost:8080/DashboardServer/api/Accesso/mod/action=add/utente="+email+"/nomefonte="+fonte);
 			};
 			}
 		else{
@@ -155,19 +198,21 @@ function fill_tabella(){
 				console.log(url);
 				
 			}else{var pagina;
-			if(item[i].id.split("$")[2] == "Pagina pubblica"){pagina="public";}
-			else if(item[i].id.split("$")[2] == ""){pagina="null";}
-			else{ pagina = item[i].id.split("$")[2];};
-			$.get("http://localhost:8080/DashboardServer/api/Accesso/mod/del/utente="+email+"/nomefonte="+fonte+"/pagina="+pagina);
+				var email = item[i].id.split("$")[0];
+				var fonte = item[i].id.split("$")[1];
+				$.get("http://localhost:8080/DashboardServer/api/Accesso/mod/action=del/utente="+email+"/nomefonte="+fonte);
 			};
 			
 			};
 		
 		}//end for
-	window.location = "index.html";
+	window.location = "gestione_utenti.html";
 	}	
 
     
     
 }//end function fill_tabella
+
+
+
 
