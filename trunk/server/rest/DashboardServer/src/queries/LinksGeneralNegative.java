@@ -12,7 +12,7 @@ import java.util.List;
 import javax.ws.rs.PathParam;
 
 @Path("/links/general/all/idutente={IDUtente}/nomefonte={NomeFonte}/limit={inf}-{sup}")
-public class LinksGeneral {
+public class LinksGeneralNegative {
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
