@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.PathParam;
 
-@Path("/links/general/negative/idutente={IDUtente}/nomefonte={NomeFonte}/limit={inf}-{sup}")
-public class LinksGeneralNegative {
+@Path("/links/general/all/idutente={IDUtente}/nomefonte={NomeFonte}/limit={inf}-{sup}")
+public class LinksGeneral {
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getLinksGeneral(@PathParam("IDUtente") int idutente, @PathParam("NomeFonte") String nome, @PathParam("inf") int inf, @PathParam("sup") int sup) {
-		String result = "[";
+	public String getLinksGeneral(@PathParam("IDUtente") int idutente,@PathParam("NomeFonte") String nome, @PathParam("inf") int inf, @PathParam("sup") int sup) {
+		String result="";
 		try {
 			result = this.getLinks(idutente,nome,inf,sup);
 			
@@ -33,7 +33,7 @@ public class LinksGeneralNegative {
 	}
 
 	
-	private String getLinks(int idutente,String nome,int inf, int sup) throws Exception {
+	private String getLinks(int idutente, String nome,int inf, int sup) throws Exception {
 		int max = 0;
 		String links ="[ ";
 		List<String> Topics = new ArrayList<String>();
@@ -80,7 +80,7 @@ public class LinksGeneralNegative {
 	for(int i=0; i<Topics.size();i++){
 	Connection conn_l = DbManager.getConnection();
 	Statement stmt_l = conn_l.createStatement();
-	String query = "SELECT DISTINCT p.Link, p.Text FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic ='"+Topics.get(i)+"' AND p.Polarity='-1' LIMIT "+inf+","+sup+";";
+	String query = "SELECT DISTINCT p.Link, p.Text FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic ='"+Topics.get(i)+"' LIMIT "+inf+","+sup+";";
 	ResultSet rset_l = stmt_l.executeQuery(query);
 	links += "{\"nome\":\""+Topics.get(i)+"\",\"links\":[ ";
 	while(rset_l.next()){
@@ -109,4 +109,5 @@ public class LinksGeneralNegative {
 	
 	
 }
+
 
