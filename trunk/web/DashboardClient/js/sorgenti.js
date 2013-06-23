@@ -134,7 +134,7 @@ var plot;
                    fonti.push(dt);
                     
                 }//end for 
-                
+                console.log(fonti[1]);
                 
                 var dats='['; 
                 for(i=0;i<sorgenti.length;i++){
@@ -204,7 +204,8 @@ var plot;
                 
 
     //settaggio dati per i bobble
-    function Sorgente(nomeS, post0, post1, post2, post3, post4, post5,pol0,pol1,pol2,pol3,pol4,pol5){ //post0 = numero post 6 sett fa. post5 numeo post odierni, analogamente le polaritÃ 
+    function Sorgente(nomeS,totP, post0, post1, post2, post3, post4, post5,pol0,pol1,pol2,pol3,pol4,pol5){ //post0 = numero post 6 sett fa. post5 numeo post odierni, analogamente le polaritÃ 
+             this.totalepost = totP;
              this.numeroPost=new Array();
             this.numeroPost[0]=post0;
             this.numeroPost[1]=post1;
@@ -748,15 +749,17 @@ function multifill(){
 		//TODO controllare query
 		 $.get("http://localhost:8080/DashboardServer/api/Sorgenti/grafico/general/utente="+ut+"/nomefonte="+nomi[x]+"/data1="+dat_strings[0]+"/data2="+dat_strings[1]+"/data3="+dat_strings[2]+"/data4="+dat_strings[3]+"/data5="+dat_strings[4]+"/data6="+dat_strings[5]+"/data7="+dat_strings[6],function(data){
 			 var par = $.parseJSON(data);
-			 s.push(new Sorgente(par.nomefonte, par.settimana1.numeropost,par.settimana2.numeropost,par.settimana3.numeropost,par.settimana4.numeropost,par.settimana5.numeropost,par.settimana6.numeropost, par.settimana1.gradimento, par.settimana2.gradimento,par.settimana3.gradimento, par.settimana4.gradimento, par.settimana5.gradimento, par.settimana6.gradimento));
+			 s.push(new Sorgente(par.nomefonte,par.totalepost, par.settimana1.numeropost,par.settimana2.numeropost,par.settimana3.numeropost,par.settimana4.numeropost,par.settimana5.numeropost,par.settimana6.numeropost, par.settimana1.gradimento, par.settimana2.gradimento,par.settimana3.gradimento, par.settimana4.gradimento, par.settimana5.gradimento, par.settimana6.gradimento));
 			
 			 multichart(s);
 			 
 			 var dati2="{\"bollefill\": [ ";
 		
 			 for (var t=0; t<nomi.length; t++){
-				
-			 dati2 += "{\"nome\":\""+s[t].nome+"\",\"growth\":"+s[t].growth+",\"ultimi\":"+s[t].numeroPost[5]+",\"notification\":\""+s[t].notification+"\" },";
+				$.get("http://localhost:8080/DashboardServer/api/Post/nomefonte="+s[t].nome,function(posts){var ultimi = posts.length;
+
+					});//end get ultimi
+			 dati2 += "{\"nome\":\""+s[t].nome+"\",\"growth\":"+s[t].growth+",\"ultimi\":"+s[t].totalepost+",\"notification\":\""+s[t].notification+"\" },";
 			
 			 };       
 			 console.log("l'errore qui sopra? non lo so, credo dipenda dal get interno al for x");
@@ -806,7 +809,7 @@ function dettaglio_fill(){
 	
 		 $.get("http://localhost:8080/DashboardServer/api/Sorgenti/grafico/general/utente="+ut+"/nomefonte="+readCookie("fontecliccata")+"/data1="+dat_strings[0]+"/data2="+dat_strings[1]+"/data3="+dat_strings[2]+"/data4="+dat_strings[3]+"/data5="+dat_strings[4]+"/data6="+dat_strings[5]+"/data7="+dat_strings[6],function(data){
 			 var par = $.parseJSON(data);
-			 s1.push(new Sorgente(par.nomefonte, par.settimana1.numeropost,par.settimana2.numeropost,par.settimana3.numeropost,par.settimana4.numeropost,par.settimana5.numeropost,par.settimana6.numeropost, par.settimana1.gradimento, par.settimana2.gradimento,par.settimana3.gradimento, par.settimana4.gradimento, par.settimana5.gradimento, par.settimana6.gradimento));
+			 s1.push(new Sorgente(par.nomefonte, par.totalepost, par.settimana1.numeropost,par.settimana2.numeropost,par.settimana3.numeropost,par.settimana4.numeropost,par.settimana5.numeropost,par.settimana6.numeropost, par.settimana1.gradimento, par.settimana2.gradimento,par.settimana3.gradimento, par.settimana4.gradimento, par.settimana5.gradimento, par.settimana6.gradimento));
 			
 			 singlechart(s1);
 			 polaritychart(s1);
