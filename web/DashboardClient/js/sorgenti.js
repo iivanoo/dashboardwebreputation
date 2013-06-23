@@ -134,7 +134,7 @@ var plot;
                    fonti.push(dt);
                     
                 }//end for 
-                console.log(fonti[1]);
+               
                 
                 var dats='['; 
                 for(i=0;i<sorgenti.length;i++){
@@ -742,27 +742,21 @@ function multifill(){
 	var count=0;
 	var s = new Array();
 	
-	
-	
-	$.get("http://localhost:8080/DashboardServer/api/Accesso/search/utente="+ut,function(nomi){
-	 for(var x=0; x<nomi.length; x++){
-		//TODO controllare query
-		 $.get("http://localhost:8080/DashboardServer/api/Sorgenti/grafico/general/utente="+ut+"/nomefonte="+nomi[x]+"/data1="+dat_strings[0]+"/data2="+dat_strings[1]+"/data3="+dat_strings[2]+"/data4="+dat_strings[3]+"/data5="+dat_strings[4]+"/data6="+dat_strings[5]+"/data7="+dat_strings[6],function(data){
+		 $.get("http://localhost:8080/DashboardServer/api/Sorgenti/grafico/general/utente="+ut+"/data1="+dat_strings[0]+"/data2="+dat_strings[1]+"/data3="+dat_strings[2]+"/data4="+dat_strings[3]+"/data5="+dat_strings[4]+"/data6="+dat_strings[5]+"/data7="+dat_strings[6],function(data){
 			 var par = $.parseJSON(data);
-			 s.push(new Sorgente(par.nomefonte,par.totalepost, par.settimana1.numeropost,par.settimana2.numeropost,par.settimana3.numeropost,par.settimana4.numeropost,par.settimana5.numeropost,par.settimana6.numeropost, par.settimana1.gradimento, par.settimana2.gradimento,par.settimana3.gradimento, par.settimana4.gradimento, par.settimana5.gradimento, par.settimana6.gradimento));
-			
+			 for(var x=0; x<par.length;x++){
+			  s.push(new Sorgente(par[x].nomefonte,par[x].totalepost, par[x].settimana1.numeropost,par[x].settimana2.numeropost,par[x].settimana3.numeropost,par[x].settimana4.numeropost,par[x].settimana5.numeropost,par[x].settimana6.numeropost, par[x].settimana1.gradimento, par[x].settimana2.gradimento,par[x].settimana3.gradimento, par[x].settimana4.gradimento, par[x].settimana5.gradimento, par[x].settimana6.gradimento));
+			};
 			 multichart(s);
 			 
 			 var dati2="{\"bollefill\": [ ";
 		
-			 for (var t=0; t<nomi.length; t++){
-				$.get("http://localhost:8080/DashboardServer/api/Post/nomefonte="+s[t].nome,function(posts){var ultimi = posts.length;
-
-					});//end get ultimi
+			 for (var t=0; t<s.length; t++){
+				
 			 dati2 += "{\"nome\":\""+s[t].nome+"\",\"growth\":"+s[t].growth+",\"ultimi\":"+s[t].totalepost+",\"notification\":\""+s[t].notification+"\" },";
 			
-			 };       
-			 console.log("l'errore qui sopra? non lo so, credo dipenda dal get interno al for x");
+			 };  
+
 			 dati2 = dati2.substring(0,dati2.length-1);
 			 
 		        dati2 +="]}";
@@ -770,17 +764,9 @@ function multifill(){
 			    var struttura2 = document.getElementById("bolle").innerHTML;
 			    var template2 = Handlebars.compile(struttura2);
 			    var html2 = template2($.parseJSON(dati2));
-			    document.getElementById("bobbles").innerHTML = html2;
-
-			  
-			    
-			 
-			 
-			 
+			    document.getElementById("bobbles").innerHTML = html2; 
 		});//end get
 
-	 }//end forx
-	 });//end get fonti
 	
 
 
