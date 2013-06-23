@@ -15,7 +15,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.PathParam;
-
+import java.util.GregorianCalendar;
 @Path("/Sorgenti/grafico/general/utente={Idutente}/nomefonte={Nome_fonte}/data1={Data1}/data2={Data2}/data3={Data3}/data4={Data4}/data5={Data5}/data6={Data6}/data7={Data7}")  //Data1 < Data2 & formato: AAAA-MM-GG
 public class GeneralStatistics{
 
@@ -52,9 +52,29 @@ public class GeneralStatistics{
 		
 		
 		//prima settimana----------------------------------------------------------------------
+		String d11 = "";
+		int giorno = Integer.parseInt(d2.split("-")[2]);
+		int mese = Integer.parseInt(d2.split("-")[1]);
+		int anno = Integer.parseInt(d2.split("-")[0]);
+		GregorianCalendar cal =
+            (GregorianCalendar) GregorianCalendar.getInstance();
+		 boolean isLeapYear = cal.isLeapYear(anno);
+		if((giorno == 1) && ((mese == 2)||(mese == 4)||(mese == 6)||(mese == 8)|| (mese == 9)||(mese == 11)||(mese == 1))){
+			giorno = 31;
+			if(mese == 1){mese = 12; anno = anno-1;}else{mese = mese-1;};
+		}
+		else if((giorno == 1) && ((mese == 5)||(mese == 7)||(mese == 10)||(mese == 12))){
+			giorno = 30; mese = mese-1;
+		}
+		else if((giorno == 1) && (mese == 3) && isLeapYear){giorno = 29;mese=2;}
+		else if((giorno == 1) && (mese == 3) && !isLeapYear){giorno = 28;mese=2;}
+		else{giorno = giorno-1;};
+		d11=anno+"-"+mese+"-"+giorno;
+		
+		
 		conn = DbManager.getConnection();
 		stmt = conn.createStatement();
-		rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post  WHERE Post.Data BETWEEN '"+d1+"' AND '"+d2+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
+		rset = stmt.executeQuery("SELECT DISTINCT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post  WHERE Post.Data BETWEEN '"+d1+"' AND '"+d11+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 		count = 0;
 		while (rset.next()) {
 			count++;
@@ -68,7 +88,7 @@ public class GeneralStatistics{
 		List<Integer> neg1 = new ArrayList<Integer>();
 		conn_neg = DbManager.getConnection();
 		stmt_neg = conn_neg.createStatement();
-		rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d2+"';");
+		rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d11+"';");
 		int count_neg = 0;
 		while (rset_neg.next()) {
 			count_neg++;
@@ -85,7 +105,7 @@ public class GeneralStatistics{
 		List<Integer> pos1 = new ArrayList<Integer>();
 		conn_pos = DbManager.getConnection();
 		stmt_pos = conn_pos.createStatement();
-		rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d2+"';");
+		rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d11+"';");
 		int count_pos = 0;
 		while (rset_pos.next()) {
 			count_pos++;
@@ -108,9 +128,28 @@ public class GeneralStatistics{
 	
 	
 	//seconda settimana----------------------------------------------------------------------
+		String d22 ="";
+		giorno = Integer.parseInt(d3.split("-")[2]);
+		mese = Integer.parseInt(d3.split("-")[1]);
+		anno = Integer.parseInt(d3.split("-")[0]);
+		cal =
+            (GregorianCalendar) GregorianCalendar.getInstance();
+		isLeapYear = cal.isLeapYear(anno);
+		if((giorno == 1) && ((mese == 2)||(mese == 4)||(mese == 6)||(mese == 8)|| (mese == 9)||(mese == 11)||(mese == 1))){
+			giorno = 31;
+			if(mese == 1){mese = 12; anno = anno-1;}else{mese = mese-1;};
+		}
+		else if((giorno == 1) && ((mese == 5)||(mese == 7)||(mese == 10)||(mese == 12))){
+			giorno = 30; mese = mese-1;
+		}
+		else if((giorno == 1) && (mese == 3) && isLeapYear){giorno = 29;mese=2;}
+		else if((giorno == 1) && (mese == 3) && !isLeapYear){giorno = 28;mese=2;}
+		else{giorno = giorno-1;};
+		d22=anno+"-"+mese+"-"+giorno;
+		
 	conn = DbManager.getConnection();
 	stmt = conn.createStatement();
-	rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d2+"' AND '"+d3+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
+	rset = stmt.executeQuery("SELECT DISTINCT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d2+"' AND '"+d22+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 	count = 0;
 	
 	while (rset.next()) {
@@ -126,7 +165,7 @@ public class GeneralStatistics{
 	List<Integer> neg2 = new ArrayList<Integer>();
 	conn_neg = DbManager.getConnection();
 	stmt_neg = conn_neg.createStatement();
-	rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN  Sorgenti AS s INNER JOIN Post AS p  WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d3+"';");
+	rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN  Sorgenti AS s INNER JOIN Post AS p  WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d22+"';");
 	 count_neg = 0;
 	while (rset_neg.next()) {
 		count_neg++;
@@ -143,7 +182,7 @@ public class GeneralStatistics{
 	List<Integer> pos2 = new ArrayList<Integer>();
 	conn_pos = DbManager.getConnection();
 	stmt_pos = conn_pos.createStatement();
-	rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d3+"';");
+	rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d22+"';");
 	count_pos = 0;
 	while (rset_pos.next()) {
 		count_pos++;
@@ -167,9 +206,29 @@ public class GeneralStatistics{
 	};
 
 //terza settimana----------------------------------------------------------------------
+	String d33 ="";
+	giorno = Integer.parseInt(d4.split("-")[2]);
+	mese = Integer.parseInt(d4.split("-")[1]);
+	anno = Integer.parseInt(d4.split("-")[0]);
+	cal =
+        (GregorianCalendar) GregorianCalendar.getInstance();
+	isLeapYear = cal.isLeapYear(anno);
+	if((giorno == 1) && ((mese == 2)||(mese == 4)||(mese == 6)||(mese == 8)|| (mese == 9)||(mese == 11)||(mese == 1))){
+		giorno = 31;
+		if(mese == 1){mese = 12; anno = anno-1;}else{mese = mese-1;};
+	}
+	else if((giorno == 1) && ((mese == 5)||(mese == 7)||(mese == 10)||(mese == 12))){
+		giorno = 30; mese = mese-1;
+	}
+	else if((giorno == 1) && (mese == 3) && isLeapYear){giorno = 29;mese=2;}
+	else if((giorno == 1) && (mese == 3) && !isLeapYear){giorno = 28;mese=2;}
+	else{giorno = giorno-1;};
+	d33=anno+"-"+mese+"-"+giorno;
+	
+	
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d3+"' AND '"+d4+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID  AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
+rset = stmt.executeQuery("SELECT DISTINCT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d3+"' AND '"+d33+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID  AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 count = 0;
 
 while (rset.next()) {
@@ -185,7 +244,7 @@ conn.close();
 List<Integer> neg3 = new ArrayList<Integer>();
 conn_neg = DbManager.getConnection();
 stmt_neg = conn_neg.createStatement();
-rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID  AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d4+"';");
+rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID  AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d33+"';");
  count_neg = 0;
 while (rset_neg.next()) {
 	count_neg++;
@@ -202,7 +261,7 @@ conn_neg.close();
 List<Integer> pos3 = new ArrayList<Integer>();
 conn_pos = DbManager.getConnection();
 stmt_pos = conn_pos.createStatement();
-rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d4+"';");
+rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d33+"';");
 count_pos = 0;
 while (rset_pos.next()) {
 	count_pos++;
@@ -226,9 +285,30 @@ if(numeropost3!=0){
 
 
 //quarta settimana----------------------------------------------------------------------
+String d44 ="";
+giorno = Integer.parseInt(d5.split("-")[2]);
+mese = Integer.parseInt(d5.split("-")[1]);
+anno = Integer.parseInt(d5.split("-")[0]);
+cal =
+    (GregorianCalendar) GregorianCalendar.getInstance();
+isLeapYear = cal.isLeapYear(anno);
+if((giorno == 1) && ((mese == 2)||(mese == 4)||(mese == 6)||(mese == 8)|| (mese == 9)||(mese == 11)||(mese == 1))){
+	giorno = 31;
+	if(mese == 1){mese = 12; anno = anno-1;}else{mese = mese-1;};
+}
+else if((giorno == 1) && ((mese == 5)||(mese == 7)||(mese == 10)||(mese == 12))){
+	giorno = 30; mese = mese-1;
+}
+else if((giorno == 1) && (mese == 3) && isLeapYear){giorno = 29;mese=2;}
+else if((giorno == 1) && (mese == 3) && !isLeapYear){giorno = 28;mese=2;}
+else{giorno = giorno-1;};
+d44=anno+"-"+mese+"-"+giorno;
+
+
+
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d4+"' AND '"+d5+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
+rset = stmt.executeQuery("SELECT DISTINCT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d4+"' AND '"+d44+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 count = 0;
 
 while (rset.next()) {
@@ -244,7 +324,7 @@ conn.close();
 List<Integer> neg4 = new ArrayList<Integer>();
 conn_neg = DbManager.getConnection();
 stmt_neg = conn_neg.createStatement();
-rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d5+"';");
+rset_neg = stmt_neg.executeQuery("SELECT DISTINCT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d44+"';");
 count_neg = 0;
 while (rset_neg.next()) {
 	count_neg++;
@@ -261,7 +341,7 @@ conn_neg.close();
 List<Integer> pos4 = new ArrayList<Integer>();
 conn_pos = DbManager.getConnection();
 stmt_pos = conn_pos.createStatement();
-rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p  WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d5+"';");
+rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p  WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d44+"';");
 count_pos = 0;
 while (rset_pos.next()) {
 	count_pos++;
@@ -287,9 +367,30 @@ if(numeropost4!=0){
 
 
 //quinta settimana----------------------------------------------------------------------
+String d55 ="";
+giorno = Integer.parseInt(d6.split("-")[2]);
+mese = Integer.parseInt(d6.split("-")[1]);
+anno = Integer.parseInt(d6.split("-")[0]);
+cal =
+    (GregorianCalendar) GregorianCalendar.getInstance();
+isLeapYear = cal.isLeapYear(anno);
+if((giorno == 1) && ((mese == 2)||(mese == 4)||(mese == 6)||(mese == 8)|| (mese == 9)||(mese == 11)||(mese == 1))){
+	giorno = 31;
+	if(mese == 1){mese = 12; anno = anno-1;}else{mese = mese-1;};
+}
+else if((giorno == 1) && ((mese == 5)||(mese == 7)||(mese == 10)||(mese == 12))){
+	giorno = 30; mese = mese-1;
+}
+else if((giorno == 1) && (mese == 3) && isLeapYear){giorno = 29;mese=2;}
+else if((giorno == 1) && (mese == 3) && !isLeapYear){giorno = 28;mese=2;}
+else{giorno = giorno-1;};
+d55=anno+"-"+mese+"-"+giorno;
+
+
+
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS Acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d5+"' AND '"+d6+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
+rset = stmt.executeQuery("SELECT DISTINCT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS Acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d5+"' AND '"+d55+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 count = 0;
 
 while (rset.next()) {
@@ -305,7 +406,7 @@ conn.close();
 List<Integer> neg5 = new ArrayList<Integer>();
 conn_neg = DbManager.getConnection();
 stmt_neg = conn_neg.createStatement();
-rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d6+"';");
+rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM  Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '-1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d55+"';");
 count_neg = 0;
 while (rset_neg.next()) {
 	count_neg++;
@@ -322,7 +423,7 @@ conn_neg.close();
 List<Integer> pos5 = new ArrayList<Integer>();
 conn_pos = DbManager.getConnection();
 stmt_pos = conn_pos.createStatement();
-rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN  Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d6+"';");
+rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN  Sorgenti AS s INNER JOIN Post AS p WHERE s.ID = p.ID_Fonte AND p.Polarity = '+1' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d55+"';");
 count_pos = 0;
 while (rset_pos.next()) {
 	count_pos++;
@@ -345,7 +446,7 @@ if(numeropost5!=0){
 //sesta settimana----------------------------------------------------------------------
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d6+"' AND '"+d7+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
+rset = stmt.executeQuery("SELECT DISTINCT Post.ID AS label FROM Utenti AS u INNER JOIN Accesso AS acc INNER JOIN Sorgenti AS s INNER JOIN Post WHERE Post.Data BETWEEN '"+d6+"' AND '"+d7+"' AND u.ID = acc.IDUtente AND acc.IDSorgente = s.ID AND Post.ID_Fonte = s.ID AND s.Nome = '"+nome+"';");
 count = 0;
 
 while (rset.next()) {
@@ -400,8 +501,19 @@ if(numeropost6!=0){
 };
 	
 
+int tot = 0;
+Connection conn_tot = DbManager.getConnection();
+Statement stmt_tot = conn_tot.createStatement();
+ResultSet rset_tot = stmt_tot.executeQuery("SELECT COUNT(Post.ID) AS ID FROM Sorgenti INNER JOIN Post WHERE Post.ID_Fonte = Sorgenti.ID AND Sorgenti.Nome = '"+nome+"'");
+if(rset_tot.next()){
+	tot = Integer.parseInt(rset_tot.getObject("ID").toString());
+};
+
+
+
+
 	
-	String resu ="{\"nomefonte\":\""+nome+"\",\"settimana1\":{\"numeropost\":\""+numeropost1+"\",\"gradimento\":\""+gradimento1+"\"},\"settimana2\":{\"numeropost\":\""+numeropost2+"\",\"gradimento\":\""+gradimento2+"\"},\"settimana3\":{\"numeropost\":\""+numeropost3+"\",\"gradimento\":\""+gradimento3+"\"},\"settimana4\":{\"numeropost\":\""+numeropost4+"\",\"gradimento\":\""+gradimento4+"\"},\"settimana5\":{\"numeropost\":\""+numeropost5+"\",\"gradimento\":\""+gradimento5+"\"},\"settimana6\":{\"numeropost\":\""+numeropost6+"\",\"gradimento\":\""+gradimento6+"\"}}  ";
+	String resu ="{\"nomefonte\":\""+nome+"\",\"totalepost\":\""+tot+"\",\"settimana1\":{\"numeropost\":\""+numeropost1+"\",\"gradimento\":\""+gradimento1+"\"},\"settimana2\":{\"numeropost\":\""+numeropost2+"\",\"gradimento\":\""+gradimento2+"\"},\"settimana3\":{\"numeropost\":\""+numeropost3+"\",\"gradimento\":\""+gradimento3+"\"},\"settimana4\":{\"numeropost\":\""+numeropost4+"\",\"gradimento\":\""+gradimento4+"\"},\"settimana5\":{\"numeropost\":\""+numeropost5+"\",\"gradimento\":\""+gradimento5+"\"},\"settimana6\":{\"numeropost\":\""+numeropost6+"\",\"gradimento\":\""+gradimento6+"\"}}  ";
 	//{"nomefonte" : " ", "settimana0" : {"numeropost" : "  ","gradimento":"   "},"settimana1" : {"numeropost" : "  ","gradimento":"   "},"settimana2" : {"numeropost" : "  ","gradimento":"   "},"settimana3" : {"numeropost" : "  ","gradimento":"   "},"settimana4" : {"numeropost" : "  ","gradimento":"   "},"settimana5" : {"numeropost" : "  ","gradimento":"   "}};
 	
 		
@@ -409,7 +521,6 @@ if(numeropost6!=0){
 		
 		
 
-		
 		return resu;
 	}
 	

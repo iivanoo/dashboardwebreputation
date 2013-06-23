@@ -13,8 +13,10 @@ import db.DbManager;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ws.rs.PathParam;
+import java.util.GregorianCalendar;
 
 @Path("/Sorgenti/grafico/general/nomefonte={NomeFonte}/topic={topic}/data1={Data1}/data2={Data2}/data3={Data3}/data4={Data4}/data5={Data5}/data6={Data6}/data7={Data7}")  //Data1 < Data2 & formato: AAAA-MM-GG
 public class GeneralStatisticsForTopic{
@@ -53,9 +55,30 @@ public class GeneralStatisticsForTopic{
 		
 		
 		//prima settimana----------------------------------------------------------------------
+		String d11 = "";
+		int giorno = Integer.parseInt(d2.split("-")[2]);
+		int mese = Integer.parseInt(d2.split("-")[1]);
+		int anno = Integer.parseInt(d2.split("-")[0]);
+		GregorianCalendar cal =
+            (GregorianCalendar) GregorianCalendar.getInstance();
+		 boolean isLeapYear = cal.isLeapYear(anno);
+		if((giorno == 1) && ((mese == 2)||(mese == 4)||(mese == 6)||(mese == 8)|| (mese == 9)||(mese == 11)||(mese == 1))){
+			giorno = 31;
+			if(mese == 1){mese = 12; anno = anno-1;}else{mese = mese-1;};
+		}
+		else if((giorno == 1) && ((mese == 5)||(mese == 7)||(mese == 10)||(mese == 12))){
+			giorno = 30; mese = mese-1;
+		}
+		else if((giorno == 1) && (mese == 3) && isLeapYear){giorno = 29;mese=2;}
+		else if((giorno == 1) && (mese == 3) && !isLeapYear){giorno = 28;mese=2;}
+		else{giorno = giorno-1;};
+		d11=anno+"-"+mese+"-"+giorno;
+		
+		
+		
 		conn = DbManager.getConnection();
 		stmt = conn.createStatement();
-		rset = stmt.executeQuery("SELECT p.ID FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic= '"+topic+"' AND p.Data BETWEEN '"+d1+"' AND '"+d2+"'  AND s.Nome = '"+nome+"';");
+		rset = stmt.executeQuery("SELECT p.ID FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic= '"+topic+"' AND p.Data BETWEEN '"+d1+"' AND '"+d11+"'  AND s.Nome = '"+nome+"';");
 		count = 0;
 		while (rset.next()) {
 			count++;
@@ -69,7 +92,7 @@ public class GeneralStatisticsForTopic{
 		List<Integer> neg1 = new ArrayList<Integer>();
 		conn_neg = DbManager.getConnection();
 		stmt_neg = conn_neg.createStatement();
-		rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d2+"';");
+		rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d11+"';");
 		int count_neg = 0;
 		while (rset_neg.next()) {
 			count_neg++;
@@ -84,7 +107,7 @@ public class GeneralStatisticsForTopic{
 		List<Integer> pos1 = new ArrayList<Integer>();
 		conn_pos = DbManager.getConnection();
 		stmt_pos = conn_pos.createStatement();
-		rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d2+"';");
+		rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d1+"' AND '"+d11+"';");
 		int count_pos = 0;
 		while (rset_pos.next()) {
 			count_pos++;
@@ -105,9 +128,29 @@ public class GeneralStatisticsForTopic{
 	
 	
 	//seconda settimana----------------------------------------------------------------------
+		String d22 = "";
+		giorno = Integer.parseInt(d3.split("-")[2]);
+		mese = Integer.parseInt(d3.split("-")[1]);
+		anno = Integer.parseInt(d3.split("-")[0]);
+		cal =(GregorianCalendar) GregorianCalendar.getInstance();
+		isLeapYear = cal.isLeapYear(anno);
+		if((giorno == 1) && ((mese == 2)||(mese == 4)||(mese == 6)||(mese == 8)|| (mese == 9)||(mese == 11)||(mese == 1))){
+			giorno = 31;
+			if(mese == 1){mese = 12; anno = anno-1;}else{mese = mese-1;};
+		}
+		else if((giorno == 1) && ((mese == 5)||(mese == 7)||(mese == 10)||(mese == 12))){
+			giorno = 30; mese = mese-1;
+		}
+		else if((giorno == 1) && (mese == 3) && isLeapYear){giorno = 29;mese=2;}
+		else if((giorno == 1) && (mese == 3) && !isLeapYear){giorno = 28;mese=2;}
+		else{giorno = giorno-1;};
+		d22=anno+"-"+mese+"-"+giorno;
+		
+		
+		
 	conn = DbManager.getConnection();
 	stmt = conn.createStatement();
-	rset = stmt.executeQuery("SELECT p.ID FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic= '"+topic+"' AND p.Data BETWEEN '"+d2+"' AND '"+d3+"'  AND s.Nome = '"+nome+"'");
+	rset = stmt.executeQuery("SELECT p.ID FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic= '"+topic+"' AND p.Data BETWEEN '"+d2+"' AND '"+d22+"'  AND s.Nome = '"+nome+"'");
 	count = 0;
 	
 	while (rset.next()) {
@@ -123,7 +166,7 @@ public class GeneralStatisticsForTopic{
 	List<Integer> neg2 = new ArrayList<Integer>();
 	conn_neg = DbManager.getConnection();
 	stmt_neg = conn_neg.createStatement();
-	rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d3+"';");
+	rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d22+"';");
 	 count_neg = 0;
 	while (rset_neg.next()) {
 		count_neg++;
@@ -138,7 +181,7 @@ public class GeneralStatisticsForTopic{
 	List<Integer> pos2 = new ArrayList<Integer>();
 	conn_pos = DbManager.getConnection();
 	stmt_pos = conn_pos.createStatement();
-	rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d3+"';");
+	rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d2+"' AND '"+d22+"';");
 	count_pos = 0;
 	while (rset_pos.next()) {
 		count_pos++;
@@ -160,9 +203,28 @@ public class GeneralStatisticsForTopic{
 	};
 
 //terza settimana----------------------------------------------------------------------
+	String d33 = "";
+	giorno = Integer.parseInt(d4.split("-")[2]);
+	mese = Integer.parseInt(d4.split("-")[1]);
+	anno = Integer.parseInt(d4.split("-")[0]);
+	cal =(GregorianCalendar) GregorianCalendar.getInstance();
+	isLeapYear = cal.isLeapYear(anno);
+	if((giorno == 1) && ((mese == 2)||(mese == 4)||(mese == 6)||(mese == 8)|| (mese == 9)||(mese == 11)||(mese == 1))){
+		giorno = 31;
+		if(mese == 1){mese = 12; anno = anno-1;}else{mese = mese-1;};
+	}
+	else if((giorno == 1) && ((mese == 5)||(mese == 7)||(mese == 10)||(mese == 12))){
+		giorno = 30; mese = mese-1;
+	}
+	else if((giorno == 1) && (mese == 3) && isLeapYear){giorno = 29;mese=2;}
+	else if((giorno == 1) && (mese == 3) && !isLeapYear){giorno = 28;mese=2;}
+	else{giorno = giorno-1;};
+	d33=anno+"-"+mese+"-"+giorno;
+	
+	
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT p.ID FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic= '"+topic+"' AND p.Data BETWEEN '"+d3+"' AND '"+d4+"'  AND s.Nome = '"+nome+"'");
+rset = stmt.executeQuery("SELECT p.ID FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic= '"+topic+"' AND p.Data BETWEEN '"+d3+"' AND '"+d33+"'  AND s.Nome = '"+nome+"'");
 count = 0;
 
 while (rset.next()) {
@@ -178,7 +240,7 @@ conn.close();
 List<Integer> neg3 = new ArrayList<Integer>();
 conn_neg = DbManager.getConnection();
 stmt_neg = conn_neg.createStatement();
-rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d4+"';");
+rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d33+"';");
  count_neg = 0;
 while (rset_neg.next()) {
 	count_neg++;
@@ -193,7 +255,7 @@ conn_neg.close();
 List<Integer> pos3 = new ArrayList<Integer>();
 conn_pos = DbManager.getConnection();
 stmt_pos = conn_pos.createStatement();
-rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d4+"';");
+rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d3+"' AND '"+d33+"';");
 count_pos = 0;
 while (rset_pos.next()) {
 	count_pos++;
@@ -215,9 +277,29 @@ if(numeropost3!=0){
 
 
 //quarta settimana----------------------------------------------------------------------
+String d44 = "";
+giorno = Integer.parseInt(d5.split("-")[2]);
+mese = Integer.parseInt(d5.split("-")[1]);
+anno = Integer.parseInt(d5.split("-")[0]);
+cal =(GregorianCalendar) GregorianCalendar.getInstance();
+isLeapYear = cal.isLeapYear(anno);
+if((giorno == 1) && ((mese == 2)||(mese == 4)||(mese == 6)||(mese == 8)|| (mese == 9)||(mese == 11)||(mese == 1))){
+	giorno = 31;
+	if(mese == 1){mese = 12; anno = anno-1;}else{mese = mese-1;};
+}
+else if((giorno == 1) && ((mese == 5)||(mese == 7)||(mese == 10)||(mese == 12))){
+	giorno = 30; mese = mese-1;
+}
+else if((giorno == 1) && (mese == 3) && isLeapYear){giorno = 29;mese=2;}
+else if((giorno == 1) && (mese == 3) && !isLeapYear){giorno = 28;mese=2;}
+else{giorno = giorno-1;};
+d44=anno+"-"+mese+"-"+giorno;
+
+
+
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT p.ID FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic= '"+topic+"' AND p.Data BETWEEN '"+d4+"' AND '"+d5+"'  AND s.Nome = '"+nome+"'");
+rset = stmt.executeQuery("SELECT p.ID FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic= '"+topic+"' AND p.Data BETWEEN '"+d4+"' AND '"+d44+"'  AND s.Nome = '"+nome+"'");
 count = 0;
 
 while (rset.next()) {
@@ -233,7 +315,7 @@ conn.close();
 List<Integer> neg4 = new ArrayList<Integer>();
 conn_neg = DbManager.getConnection();
 stmt_neg = conn_neg.createStatement();
-rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d5+"';");
+rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d44+"';");
 count_neg = 0;
 while (rset_neg.next()) {
 	count_neg++;
@@ -248,7 +330,7 @@ conn_neg.close();
 List<Integer> pos4 = new ArrayList<Integer>();
 conn_pos = DbManager.getConnection();
 stmt_pos = conn_pos.createStatement();
-rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d5+"';");
+rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d4+"' AND '"+d44+"';");
 count_pos = 0;
 while (rset_pos.next()) {
 	count_pos++;
@@ -271,9 +353,28 @@ if(numeropost4!=0){
 
 
 //quinta settimana----------------------------------------------------------------------
+String d55 = "";
+giorno = Integer.parseInt(d6.split("-")[2]);
+mese = Integer.parseInt(d6.split("-")[1]);
+anno = Integer.parseInt(d6.split("-")[0]);
+cal =(GregorianCalendar) GregorianCalendar.getInstance();
+isLeapYear = cal.isLeapYear(anno);
+if((giorno == 1) && ((mese == 2)||(mese == 4)||(mese == 6)||(mese == 8)|| (mese == 9)||(mese == 11)||(mese == 1))){
+	giorno = 31;
+	if(mese == 1){mese = 12; anno = anno-1;}else{mese = mese-1;};
+}
+else if((giorno == 1) && ((mese == 5)||(mese == 7)||(mese == 10)||(mese == 12))){
+	giorno = 30; mese = mese-1;
+}
+else if((giorno == 1) && (mese == 3) && isLeapYear){giorno = 29;mese=2;}
+else if((giorno == 1) && (mese == 3) && !isLeapYear){giorno = 28;mese=2;}
+else{giorno = giorno-1;};
+d55=anno+"-"+mese+"-"+giorno;
+
+
 conn = DbManager.getConnection();
 stmt = conn.createStatement();
-rset = stmt.executeQuery("SELECT p.ID FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic= '"+topic+"' AND p.Data BETWEEN '"+d5+"' AND '"+d6+"'  AND s.Nome = '"+nome+"'");
+rset = stmt.executeQuery("SELECT p.ID FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic= '"+topic+"' AND p.Data BETWEEN '"+d5+"' AND '"+d55+"'  AND s.Nome = '"+nome+"'");
 count = 0;
 
 while (rset.next()) {
@@ -289,7 +390,7 @@ conn.close();
 List<Integer> neg5 = new ArrayList<Integer>();
 conn_neg = DbManager.getConnection();
 stmt_neg = conn_neg.createStatement();
-rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d6+"';");
+rset_neg = stmt_neg.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '-1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d55+"';");
 count_neg = 0;
 while (rset_neg.next()) {
 	count_neg++;
@@ -304,7 +405,7 @@ conn_neg.close();
 List<Integer> pos5 = new ArrayList<Integer>();
 conn_pos = DbManager.getConnection();
 stmt_pos = conn_pos.createStatement();
-rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d6+"';");
+rset_pos = stmt_pos.executeQuery("SELECT p.Polarity FROM Sorgenti AS s INNER JOIN Post AS p INNER JOIN Contenuto AS c INNER JOIN Topics AS t WHERE s.ID = p.ID_Fonte AND p.ID = c.IDPost AND c.IDTopic = t.ID AND t.Topic = '"+topic+"' AND p.Polarity = '+1' AND s.Nome = '"+nome+"' AND p.Data BETWEEN '"+d5+"' AND '"+d55+"';");
 count_pos = 0;
 while (rset_pos.next()) {
 	count_pos++;
