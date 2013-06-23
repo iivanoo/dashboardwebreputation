@@ -1,3 +1,8 @@
+
+
+
+
+
 /*
  * Riempimento dell'index
  */
@@ -18,7 +23,8 @@ if(readCookie("ad") == "0"){
 };
 
 $(document).ready(function(){
-	
+	console.log(readCookie("fontecliccata"));
+
 	
 	if(ut==null){window.location = "login.html";}
 	else{
@@ -71,6 +77,18 @@ function fill(){
 			    var template = Handlebars.compile(struttura);
 			    var html = template(dati);
 			    document.getElementById("ulbo").innerHTML = html;
+			    if(readCookie("fontecliccata") != null){
+			
+					$("#"+readCookie("fontecliccata")+" a").css("background","#40444e");
+					$("#"+readCookie("fontecliccata")+" span").css("background","#40444e");
+					$("#"+readCookie("fontecliccata")+" a span").css("color","white");
+					var d = document.getElementById(readCookie("fontecliccata")).childNodes[0].childNodes[0];
+					d.className += " icon-white";
+						
+				}else{
+					var d = document.getElementById("dashboard").childNodes[0].childNodes[0];
+					d.className += " icon-white";
+					};
 		}//end for
 	});//end get
 	
